@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <?php
-  define('CSSPATH', 'public_html/css/');
+  define('CSSPATH', '/auction/public_html/css/');
   $css_file =  basename($_SERVER["SCRIPT_FILENAME"], '.php') . '.css';
 ?>
 <html>
 <head>
   <title>COMP3013gp</title>
-  <link rel="stylesheet" type="text/css" href="resources/library/bootstrap-3.3.6-dest/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="/auction/resources/library/bootstrap-3.3.6-dest/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="<?php echo (CSSPATH . 'top_bar.css'); ?>">
   <link rel="stylesheet" type="text/css" href="<?php echo (CSSPATH . $css_file); ?>">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
