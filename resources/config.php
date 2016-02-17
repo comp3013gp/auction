@@ -1,4 +1,7 @@
 <?php
+  if(!mysqli_connect("localhost","comp3013-gp-dev","phphphp", "auction_site"))
+    {die('connection problem - '.mysql_error());}
+
   defined("CSS_PATH")
     or define("CSS_PATH", realpath(dirname(__FILE__) . '../public_html/css/'));
   defined("JS_PATH")

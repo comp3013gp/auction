@@ -210,3 +210,15 @@ ALTER TABLE `item`
 --
 ALTER TABLE `rating`
   ADD CONSTRAINT `user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
+
+--
+-- Set up new usernames and passwords for development and deployment.
+--
+
+USE `mysql`;
+
+GRANT ALL PRIVILEGES ON *.* TO 'comp3013-gp-dev'@'localhost' IDENTIFIED BY PASSWORD '*85FBE1F41A28D0D54A8489CD4FBE0FEBA476DDB4' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON `auction_site`.* TO 'comp3013-gp-dev'@'localhost' WITH GRANT OPTION;
+
+GRANT ALL PRIVILEGES ON *.* TO 'comp3013-gp'@'localhost' IDENTIFIED BY PASSWORD '*85FBE1F41A28D0D54A8489CD4FBE0FEBA476DDB4' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON `auction_site`.* TO 'comp3013-gp'@'localhost' WITH GRANT OPTION;
