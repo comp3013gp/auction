@@ -14,6 +14,9 @@ SET time_zone = "+00:00";
 -- Database: `auction_site`
 --
 
+CREATE DATABASE `auction_site`;
+USE `auction_site`;
+
 -- --------------------------------------------------------
 
 --
