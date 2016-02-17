@@ -1,6 +1,9 @@
 <?php
-  require_once("public_html/top_bar.php")
+  require_once("resources/templates/top_bar.php")
 ?>
+<h1>
+  Your Current Auctions:
+</h1>
 <?php
-  require_once("public_html/bottom_bar.php")
+  require_once("resources/templates/bottom_bar.php")
 ?>
