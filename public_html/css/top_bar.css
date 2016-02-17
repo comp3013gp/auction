@@ -1,0 +1,25 @@
+div.body-container {
+  width: 90%;
+  margin: 0 auto
+}
+
+nav.navbar {
+  background-color: #3ca7bd;
+  border-radius: 0;
+}
+
+span.icon-bar {
+  background-color: #fff;
+}
+
+a.navbar-brand {
+  color: #fff;
+}
+
+a.nav-item {
+  color: #fff;
+}
+
+a.nav-item:hover {
+  color: #3ca7bd;
+}
