@@ -13,6 +13,10 @@
 </head>
 <body>
 <?php
+  $connection = mysqli_connect("localhost","comp3013-gp-dev","phphphp", "auction_site");
+  if(!$connection)
+    {die('connection problem - '.mysql_error());}
+
   require_once(realpath(dirname(__FILE__) . "/../config.php"));
 ?>
 <nav class="navbar">
