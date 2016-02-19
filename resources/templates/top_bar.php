@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <?php
   define('CSSPATH', '/auction/public_html/css/');
+  define('JSPATH', '/auction/public_html/js/');
   $css_file =  basename($_SERVER["SCRIPT_FILENAME"], '.php') . '.css';
+  $js_file =  basename($_SERVER["SCRIPT_FILENAME"], '.php') . '.js';
 ?>
 <html>
 <head>
