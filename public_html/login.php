@@ -9,7 +9,7 @@
   SignUp
 </h1>
 <div class="center-block col-xs-6" id="login-form">
-  <form class="clearfix">
+  <form method="post" action="<?=$_SERVER['PHP_SELF']?>" class="clearfix">
     <div class="input_group">
       <input type="text" class="form-control" placeholder="Email address">
     </div>
@@ -21,7 +21,7 @@
   <span class="form-changer" id="to-signup">Want to sign up? Click here!</span>
 </div>
 <div class="center-block col-xs-6" id="signup-form">
-  <form class="clearfix">
+  <form method="post" action="<?=$_SERVER['PHP_SELF']?>" class="clearfix">
     <div class="input_group">
       <input type="text" class="form-control" placeholder="Username">
     </div>
