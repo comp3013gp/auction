@@ -31,15 +31,20 @@
       $query = "select email_address from user where email_address='".$email_address."'";
       $result = mysqli_query($connection,$query);
       $result_num = mysqli_num_rows($result);
+      $message = "";
       if ($result_num>=1) {
-        ?><script>alert('Email already exists.');</script><?php
-      } else {
+        $message . "Email already exists.\n";
+      }
+      $message . $name . "\n";
+      if ($message == "") {
         mysqli_query($connection, "insert into user(name,email_address,password,user_type) values('".$name."','".$email_address."','".$password."','".$user_type."')");
         $query = mysqli_query($connection, "select * from user where email_address='$email_address'");
         $user = mysqli_fetch_array($query);
         $_SESSION['user'] = $user['user_id']; 
         header("Location: /auction/public_html/main.php");
-      } 
+      } else {
+        ?><script>alert(<?php echo $message;?>);</script><?php
+      }
     }
   }
 
@@ -74,7 +79,7 @@
       <input name="email_address" type="text" class="form-control" placeholder="Email address">
     </div>
     <div class="input_group">
-      <input name="password" type="text" class="form-control" placeholder="Password">
+      <input name="password" type="password" class="form-control" placeholder="Password">
     </div>
     <div class="radio">
       <label>
