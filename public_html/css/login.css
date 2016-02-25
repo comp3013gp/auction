@@ -1,0 +1,32 @@
+h1#login-header {
+  display: block;
+}
+
+h1#signup-header {
+  display: none;
+}
+
+form {
+  margin: 50px auto 0;
+}
+
+.input_group {
+  margin: 20px auto;
+}
+
+#login-form {
+  display: block;
+}
+
+#signup-form {
+  display: none;
+}
+
+span.form-changer {
+  color: #3ca7bd;
+}
+
+span.form-changer:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
