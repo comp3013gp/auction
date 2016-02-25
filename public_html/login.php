@@ -5,6 +5,8 @@
     header("Location: /auction/public_html/main.php");
   }
 
+  $message = '';
+
   require_once(realpath(dirname(__FILE__) . "/../resources/dbconnection.php"));
   require_once(realpath(dirname(__FILE__) . "/../resources/config.php"));
 
@@ -18,18 +20,20 @@
         $result = mysqli_query($connection, $query);
         $result_num = mysqli_num_rows($result);
         if($result_num>=1) {
-          $query = mysqli_query($connection, "select * from user where email_address='$email_address'");
+          $query = mysqli_query($connection, "select * from user where email_address='".$email_address."' and user_type='".$user_type."'");
           $user = mysqli_fetch_array($query);
           $_SESSION['user_id'] = $user['user_id']; 
           header("Location: /auction/public_html/main.php");
         } else {
-          echo "<script type='text/javascript'>alert('You put invalid email, password, or user type.');</script>";
+          $message .= 'You put invalid email, password, or user type.';
         }
       } else {
-        echo "<script type='text/javascript'>alert('You put invalid email or password.');</script>";
+        $message .= 'You put invalid email, password, or user type.';
+      }
+      if ($message != '') {
+        echo "<script type='text/javascript'>alert('$message');</script>";
       }
     } elseif($_POST['action']=='signup') {
-      $message = '';
       if (empty($_POST['user_type'])) {
         $message .= 'You have to choose to be a buyer or a seller.\n';
       } else {
