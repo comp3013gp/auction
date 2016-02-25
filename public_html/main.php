@@ -1,7 +1,7 @@
 <?php
   session_start();
 
-  if (!isset($_SESSION['user'])) {
+  if (!isset($_SESSION['user_id'])) {
     header("Location: /auction/public_html/login.php");
   }
   require_once(realpath(dirname(__FILE__) . "/../resources/config.php"));
@@ -10,7 +10,7 @@
 <h1>
   Main page
 </h1>
-<span>Hi user <?php echo $_SESSION["user"]?></span>
+<span>Hi user <?php echo $_SESSION["user_id"]?></span>
 <?php
   require_once(TEMPLATES_PATH . '/bottom_bar.php');
 ?>
