@@ -1,0 +1,11 @@
+USE auction_site;
+INSERT INTO category (name) VALUES ('Books & Audible');
+INSERT INTO category (name) VALUES ('Movies, TV, Music & Games');
+INSERT INTO category (name) VALUES ('Electronics & Computers');
+INSERT INTO category (name) VALUES ('Home, Garden, Pets & DIY');
+INSERT INTO category (name) VALUES ('Toys, Children & Baby');
+INSERT INTO category (name) VALUES ('Clothes, Shoes & Jewellery');
+INSERT INTO category (name) VALUES ('Sports & Outdoors');
+INSERT INTO category (name) VALUES ('Beauty, Health & Grocery');
+INSERT INTO category (name) VALUES ('Car & Motorbike');
+INSERT INTO category (name) VALUES ('Business, Industry & Science');
