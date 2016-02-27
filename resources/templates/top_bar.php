@@ -9,6 +9,7 @@
 <head>
   <title>COMP3013gp</title>
   <link rel="stylesheet" type="text/css" href="/auction/resources/library/bootstrap-3.3.6-dest/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="<?php echo (CSSPATH . 'application.css'); ?>">
   <link rel="stylesheet" type="text/css" href="<?php echo (CSSPATH . 'top_bar.css'); ?>">
   <link rel="stylesheet" type="text/css" href="<?php echo (CSSPATH . $css_file); ?>">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,7 +27,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">comp3013gp-auction</a>
+      <a class="navbar-brand" href="/auction/public_html/main.php">comp3013gp-auction</a>
     </div>
     <?php
       if (basename($_SERVER["SCRIPT_FILENAME"]) != "login.php") {
