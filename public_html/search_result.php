@@ -15,21 +15,8 @@
   require_once(TEMPLATES_PATH . '/top_bar.php');
 ?>
 <h1>
-  Search By Category
+  Search Result 
 </h1>
-<ul id="category-list">
-  <?php
-    $query = "select * from category";
-    $result = mysqli_query($connection, $query);
-    while ($category = mysqli_fetch_array($result)) {
-      echo "
-        <li class='category'>
-          <a href='/auction/public_html/search_result.php?".$category['category_id']."'>".$category['name']."</a>
-        </li>
-      ";
-    }
-  ?>
-</ul>
 <?php
   require_once(TEMPLATES_PATH . '/bottom_bar.php');
 ?>
