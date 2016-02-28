@@ -142,11 +142,4 @@ $(document).ready(function() {
         }
       }
   });
-        
-  /*$('select#end-day').focus(function() {
-    if ($('select#end-year').val() == "0" || $('select#end-month').val() == "0") {
-      alert("Please select year and month first.");
-      return false;
-    }
-  });*/
 });

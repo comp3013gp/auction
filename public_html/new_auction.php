@@ -49,34 +49,15 @@
     <div class='input-group'>
       <select class="form-control end-date" id="end-year">
         <option value="" class="default-op">Year</option>
-        <?php
-          /*for ($i = date("Y"); $i < date("Y") + 3; $i++) {
-            echo "<option value='".$i."'>".$i."</option>";
-          }*/
-        ?>
       </select>
       <select class="form-control end-date" id="end-month">
         <option value="" class="default-op">Month</option>
-        <?php
-          /*for ($i = date("n"); $i < 13; $i++) {
-            echo "<option value='".$i."'>".$i."</option>";
-          }*/
-        ?>
       </select>
       <select class="form-control end-date" id="end-day">
         <option value="" class="default-op">Day</option>
       </select>
       <select class="form-control end-date" id="end-time">
         <option value="" class="default-op">Time</option>
-        <?php
-          /*for ($i = 0; $i < 24; $i++) {
-            if ($i < 10) {
-              echo "<option value='0".$i.":00:00'>".$i.":00</option>";
-            } else {
-              echo "<option value='".$i.":00:00'>".$i.":00</option>";
-            }
-          }*/
-        ?>
       </select>
     </div>
     <input name="action" type="hidden" value="item">
