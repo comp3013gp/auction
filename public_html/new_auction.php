@@ -7,10 +7,7 @@
   if (!isset($_SESSION['user_id'])) {
     header("Location: /auction/public_html/login.php");
   } else {
-    $query = "select * from user where user_id='".$_SESSION['user_id']."'";
-    $result = mysqli_query($connection, $query);
-    $user = mysqli_fetch_array($result);
-    if ($user['user_type'] == "buyer") {
+    if ($_SESSION['user_type'] == "buyer") {
       header("Location: /auction/public_html/main.php");
     }
   }
