@@ -43,7 +43,8 @@ CREATE TABLE item (
   FOREIGN KEY(owner_id)
     REFERENCES user(user_id),
   FOREIGN KEY(category_id)
-    REFERENCES category(category_id)
+    REFERENCES category(category_id),
+  UNIQUE(name);
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE auction (
