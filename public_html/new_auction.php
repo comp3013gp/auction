@@ -118,7 +118,7 @@
       </select>
     </div>
     <input name="action" type="hidden" value="new-auction">
-    <input type="submit" value="submit" name="submit" class="btn btn-default pull-right">
+    <input id="submit-new-auction" type="submit" value="submit" name="submit" class="btn btn-default pull-right">
   </form> 
 </div>
 <?php
