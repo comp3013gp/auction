@@ -29,7 +29,7 @@
     </div>
     <input name="action" type="hidden" value="item">
     <select class="form-control">
-      <option value="0">Select Category:</option>
+      <option value="">Select Category:</option>
       <?php
         $query = "select * from category";
         $result = mysqli_query($connection, $query);
@@ -46,18 +46,39 @@
     <div class="input_group">
     <textarea form="add-auction" rows="5" id="item_desc" name="item_desc" type="text" class="form-control" placeholder="Item description"></textarea>
     </div>
-    <div class='input-group date' id='datetimepicker1'>
-      <input type='text' class="form-control" />
-      <span class="input-group-addon">
-        <span class="glyphicon glyphicon-calendar"></span>
-      </span>
-      </div>
+    <div class='input-group'>
+      <select class="form-control end-date" id="end-year">
+        <option value="" class="default-op">Year</option>
+        <?php
+          /*for ($i = date("Y"); $i < date("Y") + 3; $i++) {
+            echo "<option value='".$i."'>".$i."</option>";
+          }*/
+        ?>
+      </select>
+      <select class="form-control end-date" id="end-month">
+        <option value="" class="default-op">Month</option>
+        <?php
+          /*for ($i = date("n"); $i < 13; $i++) {
+            echo "<option value='".$i."'>".$i."</option>";
+          }*/
+        ?>
+      </select>
+      <select class="form-control end-date" id="end-day">
+        <option value="" class="default-op">Day</option>
+      </select>
+      <select class="form-control end-date" id="end-time">
+        <option value="" class="default-op">Time</option>
+        <?php
+          /*for ($i = 0; $i < 24; $i++) {
+            if ($i < 10) {
+              echo "<option value='0".$i.":00:00'>".$i.":00</option>";
+            } else {
+              echo "<option value='".$i.":00:00'>".$i.":00</option>";
+            }
+          }*/
+        ?>
+      </select>
     </div>
-    <script type="text/javascript">
-      $(function () {
-          $('#datetimepicker1').datetimepicker();
-      });
-    </script>
     <input name="action" type="hidden" value="item">
   </form> 
 </div>
