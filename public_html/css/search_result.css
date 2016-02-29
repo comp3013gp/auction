@@ -32,7 +32,7 @@ ul#result-list {
 
 a#back-to-search {
   display: block;
-  font-size: 20px;
+  font-size: 15px;
   margin-top: 20px;
 }
 
@@ -40,5 +40,5 @@ span#not-found-message {
   display: block;
   font-size: 30px;
   margin-top: 50px;
-  margin-bottom: 100px;
+  margin-bottom: 50px;
 }

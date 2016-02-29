@@ -37,7 +37,6 @@
 ?>
   (Showing the results for "<?php echo $category_name; ?>")
 </h2>
-<!--<a id="back-to-search" href="/auction/public_html/search.php">Choose other category...</a>-->
 <?php
   $query = "select * from item where category_id='".$_GET['category']."'";
   $item_result = mysqli_query($connection, $query);
@@ -75,6 +74,7 @@
   }
   echo "</ul>";
 ?>
+<a id="back-to-search" href="/auction/public_html/search.php">Choose Other Category</a>
 <?php
   require_once(TEMPLATES_PATH . '/bottom_bar.php');
 ?>
