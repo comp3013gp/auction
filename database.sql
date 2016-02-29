@@ -1,4 +1,5 @@
-CREATE DATABASE auction_site;
+CREATE DATABASE auction_site
+  DEFAULT COLLATE utf8_general_ci;
 USE auction_site;
 
 CREATE TABLE user (
@@ -7,6 +8,8 @@ CREATE TABLE user (
   name varchar(16) NOT NULL,
   email_address varchar(255) NOT NULL,
   password varchar(16) NOT NULL,
+  created_at timestamp NOT NULL DEFAULT 0,
+  updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
   PRIMARY KEY(user_id),
   INDEX(name, email_address)
@@ -17,6 +20,8 @@ CREATE TABLE rating (
   user_id int(10) unsigned NOT NULL,
   rating enum('0','1','2','3','4','5') NOT NULL,
   comment varchar(255) DEFAULT NULL,
+  created_at timestamp NOT NULL DEFAULT 0,
+  updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
   PRIMARY KEY(rating_id),
   FOREIGN KEY(user_id)
@@ -38,13 +43,15 @@ CREATE TABLE item (
   category_id int(10) unsigned NOT NULL,
   name varchar(50) NOT NULL,
   description varchar(255) DEFAULT NULL,
+  created_at timestamp NOT NULL DEFAULT 0,
+  updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
   PRIMARY KEY(item_id),
   FOREIGN KEY(owner_id)
     REFERENCES user(user_id),
   FOREIGN KEY(category_id)
     REFERENCES category(category_id),
-  UNIQUE(name);
+  UNIQUE(name)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE auction (
@@ -55,6 +62,8 @@ CREATE TABLE auction (
   reserve_price decimal(10,2) NOT NULL,
   end_date datetime NOT NULL,
   view_count int(10) unsigned NOT NULL DEFAULT '0',
+  created_at timestamp NOT NULL DEFAULT 0,
+  updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
   PRIMARY KEY(auction_id),
   FOREIGN KEY(seller_id)
@@ -69,8 +78,9 @@ CREATE TABLE bid (
   bid_id int(10) unsigned not null AUTO_INCREMENT,
   bidder_id int(10) unsigned NOT NULL,
   auction_id int(10) unsigned NOT NULL,
-  time datetime NOT NULL,
   price decimal(10,2) NOT NULL,
+  created_at timestamp NOT NULL DEFAULT 0,
+  updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
   PRIMARY KEY(bid_id),
   FOREIGN KEY(bidder_id)
