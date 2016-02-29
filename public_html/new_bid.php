@@ -1,6 +1,8 @@
 <?php
   session_start();
 
+
+  require_once(realpath(dirname(__FILE__) . "/../resources/email.php"));
   require_once(realpath(dirname(__FILE__) . "/../resources/dbconnection.php"));
   require_once(realpath(dirname(__FILE__) . "/../resources/config.php"));
 
@@ -31,6 +33,20 @@
   $result = mysqli_query($connection, $query);
   $seller = mysqli_fetch_array($result);
 
+  $query = "select * from user where user_id='".$_SESSION['user_id']."'";
+  $result = mysqli_query($connection, $query);
+  $bidder = mysqli_fetch_array($result);
+
+  $query = "select b.price, u.user_id, u.name, u.email_address
+            from bid as b
+            left join user as u
+            on b.bidder_id=u.user_id
+            where b.auction_id=".$auction['auction_id']."
+            order by b.price
+            limit 1";
+  $result = mysqli_query($connection, $query);
+  $highest_bid = mysqli_fetch_array($result);
+
   $query = "select * from item where item_id='".$auction['item_id']."'";
   $result = mysqli_query($connection, $query);
   $item = mysqli_fetch_array($result);
@@ -54,6 +70,17 @@
     } else {
       mysqli_query($connection, "insert into bid(bidder_id, auction_id, price, created_at) values('".$_SESSION['user_id']."','".$auction['auction_id']."','".$bid_price."',NULL)");
       mysqli_query($connection, "update auction set current_price=".$bid_price." where auction_id=".$auction['auction_id']."");
+      $sender = new email_sender();
+      $sender->send($highest_bid['email_address'],
+                    'You Are Outbid!!',
+                    'Your bid on "'.$item['name'].'" (&#163; '.$highest_bid['price'].') has been outbid!
+                    '.$bidder['name'].' placed a bid of &#163; '.$bid_price.'.
+                    '.'Don\'t let it get away!
+                    Go to the website and bid again!');
+      $sender->send($seller['email_address'],
+                    'You Auction Got a New Bid!!',
+                    'Your auction ("'.$item['name'].'") got a new bid.
+                    '.$bidder['name'].' placed a bid of '.'&#163; '.$bid_price.'.');
       echo "<script type='text/javascript'>alert('Your bid placed successfully.');</script>";
     }
   }
