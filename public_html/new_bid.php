@@ -42,7 +42,7 @@
             left join user as u
             on b.bidder_id=u.user_id
             where b.auction_id=".$auction['auction_id']."
-            order by b.price
+            order by b.price desc
             limit 1";
   $result = mysqli_query($connection, $query);
   $highest_bid = mysqli_fetch_array($result);
