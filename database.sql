@@ -63,6 +63,7 @@ CREATE TABLE auction (
   reserve_price decimal(10,2) NOT NULL,
   end_date datetime NOT NULL,
   view_count int(10) unsigned NOT NULL DEFAULT '0',
+  has_ended enum ('0', '1') DEFAULT '0' NOT NULL,
   created_at timestamp NOT NULL DEFAULT 0,
   updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
