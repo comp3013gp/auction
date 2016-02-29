@@ -16,6 +16,8 @@
   $result = mysqli_query($connection, $query);
   $auction = mysqli_fetch_array($result);
 
+  $current_price = $auction['current_price'];
+
   $query = "select * from user where user_id='".$auction['seller_id']."'";
   $result = mysqli_query($connection, $query);
   $seller = mysqli_fetch_array($result);
@@ -23,14 +25,6 @@
   $query = "select * from item where item_id='".$auction['item_id']."'";
   $result = mysqli_query($connection, $query);
   $item = mysqli_fetch_array($result);
-
-  $query = "select * from bid where auction_id='".$auction['auction_id']."' order by price desc";
-  $result = mysqli_query($connection, $query);
-  if ($highest_bid = mysqli_fetch_array($result)) {
-    $current_price = $highest_bid['price'];
-  } else {
-    $current_price = $auction['start_price'];
-  }
 
   require_once(TEMPLATES_PATH . '/top_bar.php');
 ?>
@@ -55,7 +49,7 @@
   }
 ?>
 <?php
-  if ($highest_bid) {
+  if ($auction['start_price'] != $current_price) {
     echo "
       <span id='bid-list-span'>Bids placed on this auction (in price descending order):</span>
       <ul id='bid-list' class='list-group'>
