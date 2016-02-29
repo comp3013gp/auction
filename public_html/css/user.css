@@ -1,0 +1,9 @@
+h1#user-h1 {
+  display: inline;
+}
+
+h2#user-h2 {
+  display: inline;
+  font-size: 20px;
+  margin-left: 10px;
+}
