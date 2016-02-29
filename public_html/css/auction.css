@@ -1,3 +1,42 @@
 h2#auction-h2 {
   font-size: 15px;
 }
+
+span.auction-info {
+  display: block;
+  margin-top: 1px;
+  margin-bottom: 4px;
+}
+
+div#auction-detail {
+  margin-top: 40px;
+}
+
+span#bid-list-span {
+  display: block;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+a#bid-link {
+  font-size: 15px;
+}
+span#bid-price {
+  float: left;
+}
+
+span#bidder-info {
+  float: right;
+  margin-right: 10px;
+}
+
+span#bid-time {
+  float: right;
+}
+
+span#no-bids-span {
+  display: block;
+  margin-top: 20px;
+  font-size: 15px;
+}

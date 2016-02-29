@@ -59,6 +59,7 @@ CREATE TABLE auction (
   seller_id int(10) unsigned NOT NULL,
   item_id int(10) unsigned NOT NULL,
   start_price decimal(10,2) NOT NULL,
+  current_price decimal(10,2) NOT NULL,
   reserve_price decimal(10,2) NOT NULL,
   end_date datetime NOT NULL,
   view_count int(10) unsigned NOT NULL DEFAULT '0',

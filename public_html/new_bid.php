@@ -25,6 +25,8 @@
   $result = mysqli_query($connection, $query);
   $auction = mysqli_fetch_array($result);
 
+  $current_price = $auction['current_price'];
+
   $query = "select * from user where user_id='".$auction['seller_id']."'";
   $result = mysqli_query($connection, $query);
   $seller = mysqli_fetch_array($result);
@@ -34,15 +36,16 @@
   $item = mysqli_fetch_array($result);
 
   $message = '';
-  $current_price = 0;
 
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (empty($_POST['bid-price'])) {
       $message .= 'You need to set bid price.\n';
     } elseif (!validate_price($_POST['bid-price'])) {
       $message .= 'Enter bid price in valid format. (e.g. 50.00)';
-    } elseif ($_POST['bid-price'] < $current_price) {
+    } elseif ($_POST['bid-price'] <= $current_price) {
       $message .= 'You need to bid more than the current price.';
+    } elseif ($_POST['bid-price'] > 99999999.99) {
+      $message .= 'You cannot bid more than \u00A399999999.99';
     } else {
       $bid_price = mysqli_real_escape_string($connection, $_POST['bid-price']);
     }
@@ -50,6 +53,7 @@
       echo "<script type='text/javascript'>alert('$message');</script>";
     } else {
       mysqli_query($connection, "insert into bid(bidder_id, auction_id, price, created_at) values('".$_SESSION['user_id']."','".$auction['auction_id']."','".$bid_price."',NULL)");
+      mysqli_query($connection, "update auction set current_price=".$bid_price." where auction_id=".$auction['auction_id']."");
       echo "<script type='text/javascript'>alert('Your bid placed successfully.');</script>";
     }
   }
@@ -67,7 +71,8 @@
     <span class="auction-info">Item: <?php echo "<a href='/auction/public_html/auction.php?auction=".$auction['auction_id']."'>".$item['name']."</a>";?></span>
     <span class="auction-info">Description: <?php echo $item['description'];?></span>
     <span class="auction-info">End Date: <?php echo $auction['end_date'];?></span>
-    <span class="auction-info">Current Price: <?php ?></span>
+    <span class="auction-info">Start Price: &#163; <?php echo $auction['start_price']?></span>
+    <span class="auction-info">Current Price: &#163; <?php echo $current_price;?></span>
   </div>
 </div>
 <div class="center-block col-xs-6" id="bid-form">
