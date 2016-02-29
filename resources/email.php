@@ -24,6 +24,7 @@ class email_sender
 
     function send($recipient, $subject, $html_body)
     {
+        $this->mail->ClearAllRecipients();
         $this->mail->addAddress($recipient);
 
         $this->mail->isHTML(true);
