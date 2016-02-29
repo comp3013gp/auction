@@ -17,14 +17,14 @@
 <h1>
   Search By Category
 </h1>
-<ul id="category-list">
+<ul class="list-group col-xs-3" id="category-list">
   <?php
     $query = "select * from category";
     $result = mysqli_query($connection, $query);
     while ($category = mysqli_fetch_array($result)) {
       echo "
-        <li class='category'>
-          <a href='/auction/public_html/search_result.php?".$category['category_id']."'>".$category['name']."</a>
+        <li class='list-group-item'>
+          <a href='/auction/public_html/search_result.php?category=".$category['category_id']."'>".$category['name']."</a>
         </li>
       ";
     }

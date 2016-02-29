@@ -11,7 +11,13 @@
   Main page
 </h1>
 <span>Hi user <?php echo $_SESSION["user_id"]?></span>
-<a href="/auction/public_html/new_auction.php">Create Auction</a>
+<?php
+  if ($_SESSION['user_type'] == "buyer") {
+    echo "<a href='/auction/public_html/search.php'>Search Auction</a>";
+  } else {
+    echo "<a href='/auction/public_html/new_auction.php'>Create Auction</a>";
+  }
+?> 
 <?php
   require_once(TEMPLATES_PATH . '/bottom_bar.php');
 ?>
