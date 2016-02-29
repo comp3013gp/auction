@@ -23,6 +23,7 @@
           $query = mysqli_query($connection, "select * from user where email_address='".$email_address."' and user_type='".$user_type."'");
           $user = mysqli_fetch_array($query);
           $_SESSION['user_id'] = $user['user_id']; 
+          $_SESSION['user_type'] = $user['user_type']; 
           header("Location: /auction/public_html/main.php");
         } else {
           $message .= 'You put invalid email, password, or user type.';
@@ -70,10 +71,11 @@
         $password = mysqli_real_escape_string($connection, $_POST['password']);
       }
       if ($message == '') {
-        mysqli_query($connection, "insert into user(name,email_address,password,user_type) values('".$name."','".$email_address."','".$password."','".$user_type."')");
+        mysqli_query($connection, "insert into user(name,email_address,password,user_type,created_at) values('".$name."','".$email_address."','".$password."','".$user_type."',NULL)");
         $query = mysqli_query($connection, "select * from user where email_address='$email_address'");
         $user = mysqli_fetch_array($query);
-        $_SESSION['user_id'] = $user['user_id']; 
+        $_SESSION['user_id'] = $user['user_id'];
+        $_SESSION['user_type'] = $user['user_type']; 
         header("Location: /auction/public_html/main.php");
       } else {
         echo "<script type='text/javascript'>alert('$message');</script>";

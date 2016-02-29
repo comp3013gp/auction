@@ -1,0 +1,44 @@
+h1#search-result-h1 {
+  display: inline;
+}
+
+h2#search-result-h2 {
+  display: inline;
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+span#sort-by {
+  display: block;
+  margin-top: 20px;
+}
+
+a.item-name {
+  display: inline;
+  font-size: 20px;
+}
+
+span.auction-info {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 1px;
+  margin-bottom: 4px;
+}
+
+ul#result-list {
+  margin-top: 30px;
+}
+
+a#back-to-search {
+  display: block;
+  font-size: 15px;
+  margin-top: 20px;
+}
+
+span#not-found-message {
+  display: block;
+  font-size: 30px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}

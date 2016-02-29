@@ -7,10 +7,7 @@
   if (!isset($_SESSION['user_id'])) {
     header("Location: /auction/public_html/login.php");
   } else {
-    $query = "select * from user where user_id='".$_SESSION['user_id']."'";
-    $result = mysqli_query($connection, $query);
-    $user = mysqli_fetch_array($result);
-    if ($user['user_type'] == "buyer") {
+    if ($_SESSION['user_type'] == "buyer") {
       header("Location: /auction/public_html/main.php");
     }
   }
@@ -22,7 +19,7 @@
     return preg_match($pattern, $price);
   }
  
-  if (isset($_POST['action']) == 'new-auction') {
+  if (isset($_POST['action']) && ($_POST['action'] == 'new-auction')) {
     if (empty($_POST['item_name'])) {
       $message .= 'Item name is required.\n';
     } else {
@@ -65,10 +62,10 @@
     if ($message != '') {
       echo "<script type='text/javascript'>alert('$message');</script>";
     } else {
-      mysqli_query($connection, "insert into item(owner_id, category_id, name, description) values('".$_SESSION['user_id']."','".$item_category."','".$item_name."','".$item_desc."')");
+      mysqli_query($connection, "insert into item(owner_id, category_id, name, description, created_at) values('".$_SESSION['user_id']."','".$item_category."','".$item_name."','".$item_desc."',NULL)");
       $query = mysqli_query($connection, "select * from item where name='$item_name'");
       $item = mysqli_fetch_array($query);
-      mysqli_query($connection, "insert into auction(seller_id, item_id, start_price, reserve_price, end_date) values('".$_SESSION['user_id']."','".$item['item_id']."','".$start_price."','".$reserve_price."', '".$end_date."')");
+      mysqli_query($connection, "insert into auction(seller_id, item_id, start_price, current_price, reserve_price, end_date, created_at) values('".$_SESSION['user_id']."','".$item['item_id']."','".$start_price."','".$start_price."','".$reserve_price."', '".$end_date."',NULL)");
       echo "<script type='text/javascript'>alert('New auction created successfully.');</script>";
     }
   }
