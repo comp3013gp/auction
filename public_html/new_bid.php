@@ -80,7 +80,8 @@
       $sender->send($seller['email_address'],
                     'You Auction Got a New Bid!!',
                     'Your auction ("'.$item['name'].'") got a new bid.
-                    '.$bidder['name'].' placed a bid of '.'&#163; '.$bid_price.'.');
+                    '.$bidder['name'].' placed a bid of '.'&#163; '.$bid_price.
+                    '. This auction has got '.$auction['view_count'].' view(s) so far.');
       echo "<script type='text/javascript'>alert('Your bid placed successfully.');</script>";
     }
   }

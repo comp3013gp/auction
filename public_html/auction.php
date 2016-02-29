@@ -16,6 +16,10 @@
   $result = mysqli_query($connection, $query);
   $auction = mysqli_fetch_array($result);
 
+  $new_view_count = $auction['view_count'] + 1;
+
+  mysqli_query($connection, $query = "update auction set view_count=".$new_view_count." where auction_id=".$auction['auction_id']."");
+
   $current_price = $auction['current_price'];
 
   $query = "select * from user where user_id='".$auction['seller_id']."'";
