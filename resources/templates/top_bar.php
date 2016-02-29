@@ -35,10 +35,10 @@
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right">
           <li><a class="nav-item" href="#">MyItems</a></li><!-- TODO href to item list page -->
-          <li><a class="nav-item" href="#">MyAccount</a></li><!-- TODO href to user page -->
-          <li><a class="nav-item" href="/auction/public_html/logout.php?logout">SignOut</a></li><!-- TODO href to login page -->
+          <li><a class="nav-item" href="/auction/public_html/user.php?user='.$_SESSION['user_id'].'">MyAccount</a></li>
+          <li><a class="nav-item" href="/auction/public_html/logout.php?logout">SignOut</a></li>
         </ul>
-        </div><!-- /.navbar-collapse -->';
+        </div>';
       }
     ?>
   </div><!-- /.container-fluid -->

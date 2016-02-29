@@ -8,17 +8,11 @@
     header("Location: /auction/public_html/login.php");
   }
 
-  if (!isset($_GET['id'])) {
+  if (!isset($_GET['auction']) || $_GET['auction'] == '') {
     header("Location: /auction/public_html/search.php");
   }
 
-  if ($_SESSION['user_id'] == $_GET['id']) {
-    $user_self = true;
-  } else {
-    $user_self = false;
-  }
-
-  $query = "select * from auction where auction_id='".$_GET['id']."'";
+  $query = "select * from auction where auction_id='".$_GET['auction']."'";
   $result = mysqli_query($connection, $query);
   $auction = mysqli_fetch_array($result);
 
@@ -34,6 +28,11 @@
 <h2 id="auction-h2">
   <?php echo $item['description']; ?>
 </h2>
+<?php
+  if ($_SESSION['user_type'] == "buyer") {
+    echo "<a href='/auction/public_html/new_bid.php?auction=".$auction['auction_id']."'>Bid on this auction</a>";
+  }
+?>
 <?php
   require_once(TEMPLATES_PATH . '/bottom_bar.php');
 ?>

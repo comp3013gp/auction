@@ -8,11 +8,17 @@
     header("Location: /auction/public_html/login.php");
   }
 
-  if (!isset($_GET['id'])) {
+  if (!isset($_GET['user']) || $_GET['user'] == '') {
     header("Location: /auction/public_html/search.php");
   }
 
-  $query = "select * from user where user_id='".$_GET['id']."'";
+  if ($_SESSION['user_id'] == $_GET['user']) {
+    $user_self = true;
+  } else {
+    $user_self = false;
+  }
+
+  $query = "select * from user where user_id='".$_GET['user']."'";
   $result = mysqli_query($connection, $query);
   $user = mysqli_fetch_array($result);
 

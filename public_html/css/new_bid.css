@@ -1,0 +1,13 @@
+div#auction-detail {
+  margin-top: 40px;
+}
+
+span.auction-info {
+  display: block;
+  margin-top: 1px;
+  margin-bottom: 4px;
+}
+
+form#add-bid {
+  margin-top: 0;
+}

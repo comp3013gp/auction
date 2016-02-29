@@ -64,8 +64,8 @@
     $seller = mysqli_fetch_array($seller_result);
     echo "
       <li class='list-group-item result-item'>
-        <a class='item-name' href='/auction/public_html/auction.php?id=".$auction['auction_id']."'>".$item['name']."</a> 
-        <span class='seller-info'>(sold by <a class='seller-name' href='/auction/public_html/user.php?id=".$seller['user_id']."'>".$seller['name']."</a>)</span> <!--TODO-->
+        <a class='item-name' href='/auction/public_html/auction.php?auction=".$auction['auction_id']."'>".$item['name']."</a> 
+        <span class='seller-info'>(sold by <a class='seller-name' href='/auction/public_html/user.php?user=".$seller['user_id']."'>".$seller['name']."</a>)</span> <!--TODO-->
         <span class='auction-info'>".$item['description']."</span>
         <span class='auction-info'>End Date: ".$auction['end_date']."</span>
         <span class='auction-info'>Current Price: &#163; </span> <!-- TODO-->
