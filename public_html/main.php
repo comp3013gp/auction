@@ -27,9 +27,9 @@
   }
 ?>
 
-<h1>
+<h2>
   My Active Auctions
-</h1>
+</h2>
 <?php
   if ($_SESSION['user_type'] == "seller") {
     $query = "SELECT auction.current_price, auction.reserve_price, auction.end_date, auction.view_count,
@@ -104,9 +104,9 @@
   }
 ?>
 
-<h1>
+<h2>
   My Past Auctions
-</h1>
+</h2>
 <?php
   if ($_SESSION['user_type'] == "seller") {
     $query = "SELECT auction.current_price, auction.end_date, auction.view_count,
