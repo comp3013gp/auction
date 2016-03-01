@@ -31,6 +31,18 @@
   $query = "select * from rating where user_id='".$_GET['user']."' and is_pending='0'";
   $ratings = mysqli_query($connection, $query);
   
+  $query = "select round(avg(case rating
+                             when '5' then 5
+                             when '4' then 4
+                             when '3' then 3
+                             when '2' then 2
+                             when '1' then 1
+                             else null end),1) avg_rating
+             from rating
+             where user_id='".$_GET['user']."' and is_pending='0'";
+  $avg_rating = mysqli_query($connection, $query);
+  $avg_rating = mysqli_fetch_array($avg_rating);
+  $avg_rating = $avg_rating['avg_rating'];
 
   require_once(TEMPLATES_PATH . '/top_bar.php');
 ?>
@@ -42,7 +54,7 @@
 </h2>
 <?php
   if (mysqli_num_rows($ratings) > 0) {
-    echo "<span id='rating-span'>Ratings:</span>
+    echo "<span id='rating-span'>Ratings (Average: ".$avg_rating." out of 5)</span>
       <ul class='list-group' id='rating-list'>";
     while($rating = mysqli_fetch_array($ratings)) {
       $query = "select * from user where user_id='".$rating['rated_by']."'";
