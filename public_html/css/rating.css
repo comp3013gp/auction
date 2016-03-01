@@ -1,0 +1,18 @@
+div#auction-detail {
+  margin-top: 40px;
+}
+
+span#rate-warning {
+  display: block;
+  margin-bottom: 20px;
+}
+
+span.auction-info {
+  display: block;
+  margin-top: 1px;
+  margin-bottom: 4px;
+}
+
+form#rating {
+  margin-top: 0;
+}

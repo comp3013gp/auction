@@ -6,10 +6,16 @@
 
   if (!isset($_SESSION['user_id'])) {
     header("Location: /auction/public_html/login.php");
-  } else {
-    if ($_SESSION['user_type'] == "seller") {
-      header("Location: /auction/public_html/main.php");
-    }
+  }
+
+  $query = "select * from rating where rated_by='".$_SESSION['user_id']."' and is_pending='1'";
+  $result = mysqli_query($connection, $query);
+  if ($rating = mysqli_fetch_array($result)) {
+    header("Location: /auction/public_html/rating.php?id=".$rating['rating_id']);
+  }
+
+  if ($_SESSION['user_type'] == "seller") {
+    header("Location: /auction/public_html/main.php");
   }
 
   require_once(TEMPLATES_PATH . '/top_bar.php');

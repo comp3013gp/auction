@@ -7,3 +7,29 @@ h2#user-h2 {
   font-size: 20px;
   margin-left: 10px;
 }
+
+span#rating-span {
+  display: block;
+  font-size: 20px;
+  margin-top: 30px;
+}
+
+ul#rating-list {
+  margin-top: 15px;
+}
+
+span#rating-val {
+  font-size: 20px;
+}
+
+span.rating-info-inline {
+  display: inline-block;
+  font-size: 15px;
+  padding-bottom: 10px;
+}
+
+span.rating-info {
+  display: block;
+  margin-top: 1px;
+  margin-bottom: 4px;
+}
