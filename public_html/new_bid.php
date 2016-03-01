@@ -98,19 +98,25 @@
     <span class="auction-info">Seller: <?php echo "<a href='/auction/public_html/user.php?user=".$seller['user_id']."'>".$seller['name']."</a>";?></span>
     <span class="auction-info">Item: <?php echo "<a href='/auction/public_html/auction.php?auction=".$auction['auction_id']."'>".$item['name']."</a>";?></span>
     <span class="auction-info">Description: <?php echo $item['description'];?></span>
-    <span class="auction-info">End Date: <?php echo $auction['end_date'];?></span>
+    <span class="auction-info">End Date: <?php echo $auction['end_date']; if ($auction['has_ended'] == '1') {echo ' (Already Ended)';}?></span>
     <span class="auction-info">Start Price: &#163; <?php echo $auction['start_price']?></span>
     <span class="auction-info">Current Price: &#163; <?php echo $current_price;?></span>
   </div>
 </div>
 <div class="center-block col-xs-6" id="bid-form">
   <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]).'?auction='.$auction['auction_id'];?>" class="clearfix" id="add-bid">
-    <span>You need to bid more than the current price.</span>
+    <?php
+      if ($auction['has_ended'] == '1') {
+        echo "<span>You cannot bid on this auction as it has already ended..</span>";
+      } else {
+        echo "<span>You need to bid more than the current price.</span>";
+      }
+    ?>
     <div class="input_group">
-      <input name="bid-price" type="text" class="form-control" placeholder="How much do you want to bid? (e.g. 50.00)">
+    <input name="bid-price" type="text" class="form-control" placeholder="How much do you want to bid? (e.g. 50.00)" <?php if ($auction['has_ended']=='1') {echo 'disabled';}?>>
     </div>
     <input name="action" type="hidden" value="new-bid">
-    <input type="submit" value="submit" name="submit" class="btn btn-default pull-right">
+    <input type="submit" value="submit" name="submit" class="btn btn-default pull-right" <?php if ($auction['has_ended']=='1') {echo 'disabled';}?>>
   </form> 
 </div>
 

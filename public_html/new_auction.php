@@ -56,7 +56,13 @@
       $message .= 'End date is required.\n';
     } else {
       $end_date_input = $_POST['end-year'] . '-' . $_POST['end-month'] . '-' . $_POST['end-day'] . ' ' . $_POST['end-time'];
-      $end_date = mysqli_real_escape_string($connection, $end_date_input);
+      $date = time();
+      $date = date('Y-m-d H:i:s', strtotime(str_replace('-', '/', $date)));
+      if ($date >= $end_date_input) {
+        $message .= 'Enter valid end date.\n';
+      } else {
+        $end_date = mysqli_real_escape_string($connection, $end_date_input);
+      }
     }
 
     if ($message != '') {
@@ -65,7 +71,7 @@
       mysqli_query($connection, "insert into item(owner_id, category_id, name, description, created_at) values('".$_SESSION['user_id']."','".$item_category."','".$item_name."','".$item_desc."',NULL)");
       $query = mysqli_query($connection, "select * from item where name='$item_name'");
       $item = mysqli_fetch_array($query);
-      mysqli_query($connection, "insert into auction(seller_id, item_id, start_price, current_price, reserve_price, end_date, created_at) values('".$_SESSION['user_id']."','".$item['item_id']."','".$start_price."','".$start_price."','".$reserve_price."', '".$end_date."',NULL)");
+      mysqli_query($connection, "insert into auction(seller_id, item_id, start_price, current_price, reserve_price, end_date, has_ended, created_at) values('".$_SESSION['user_id']."','".$item['item_id']."','".$start_price."','".$start_price."','".$reserve_price."','".$end_date."','0',NULL)");
       echo "<script type='text/javascript'>alert('New auction created successfully.');</script>";
     }
   }
