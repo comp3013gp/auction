@@ -20,6 +20,7 @@ CREATE TABLE rating (
   user_id int(10) unsigned NOT NULL,
   rating enum('0','1','2','3','4','5') NOT NULL,
   comment varchar(255) DEFAULT NULL,
+  is_pending enum('0', '1') NOT NULL DEFAULT '1',
   created_at timestamp NOT NULL DEFAULT 0,
   updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
@@ -63,6 +64,7 @@ CREATE TABLE auction (
   reserve_price decimal(10,2) NOT NULL,
   end_date datetime NOT NULL,
   view_count int(10) unsigned NOT NULL DEFAULT '0',
+  has_ended enum ('0', '1') DEFAULT '0' NOT NULL,
   created_at timestamp NOT NULL DEFAULT 0,
   updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 

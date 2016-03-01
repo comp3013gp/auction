@@ -1,6 +1,6 @@
 <?php
 
-require '/library/PHPMailer/PHPMailerAutoload.php';
+require_once(realpath(dirname(__FILE__) . "/library/phpmailer/phpmailerautoload.php"));
 
 class email_sender
 {
@@ -24,6 +24,7 @@ class email_sender
 
     function send($recipient, $subject, $html_body)
     {
+        $this->mail->ClearAllRecipients();
         $this->mail->addAddress($recipient);
 
         $this->mail->isHTML(true);

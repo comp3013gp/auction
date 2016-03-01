@@ -14,14 +14,6 @@
     header("Location: /auction/public_html/search.php");
   }
 
-  $query = "select * from item where category_id='".$_GET['category']."'";
-  $item_result = mysqli_query($connection, $query);
-  if ($item = mysqli_fetch_array($item_result)) {
-    $auction_exists = true;
-  } else {
-    $auction_exists = false;
-  }
-  
   if (!isset($_GET['sort'])) {
     $sort = 'a.created_at desc';
     $sort_by = '';
@@ -58,10 +50,10 @@
             from item as i
             left join auction as a
             on i.item_id=a.item_id
-            where i.category_id='".$_GET['category']."'
+            where i.category_id='".$_GET['category']."' and a.has_ended='0'
             order by ".$sort."";
   $item_result = mysqli_query($connection, $query);
-  if ($auction_exists) {
+  if (mysqli_num_rows($item_result) > 0) {
     echo "
       <span id='sort-by'>Sort by:</span>
       <select id='sort-selector' onchange='window.location = this.options[this.selectedIndex].value'>
@@ -86,32 +78,31 @@
         </option>
       </select>  
     ";
-  }
-  if (!$auction_exists) {
+    echo "<ul class='list-group' id='result-list'>";
+    while ($item = mysqli_fetch_array($item_result)) {
+      $query = "select * from auction where item_id='".$item['item_id']."'";
+      $auction_result = mysqli_query($connection, $query);
+      $auction = mysqli_fetch_array($auction_result);
+      $current_price = $auction['current_price'];
+      $query = "select * from user where user_id='".$auction['seller_id']."'";
+      $seller_result = mysqli_query($connection, $query);
+      $seller = mysqli_fetch_array($seller_result);
+      $query = "select * from bid where auction_id='".$auction['auction_id']."' order by price desc";
+      $bid_result = mysqli_query($connection, $query);
+      echo "
+        <li class='list-group-item result-item'>
+          <a class='item-name' href='/auction/public_html/auction.php?auction=".$auction['auction_id']."'>".$item['name']."</a> 
+          <span class='seller-info'>(sold by <a class='seller-name' href='/auction/public_html/user.php?user=".$seller['user_id']."'>".$seller['name']."</a>)</span> <!--TODO-->
+          <span class='auction-info'>".$item['description']."</span>
+          <span class='auction-info'>End Date: ".$auction['end_date']."</span>
+          <span class='auction-info'>Current Price: &#163; ".$current_price."</span>
+        </li>
+      "; 
+    }
+    echo "</ul>";
+  } else {
     echo "<span id='not-found-message'>Sorry, no auction found.</span>";
   }
-  echo "<ul class='list-group' id='result-list'>";
-  while ($item = mysqli_fetch_array($item_result)) {
-    $query = "select * from auction where item_id='".$item['item_id']."'";
-    $auction_result = mysqli_query($connection, $query);
-    $auction = mysqli_fetch_array($auction_result);
-    $current_price = $auction['current_price'];
-    $query = "select * from user where user_id='".$auction['seller_id']."'";
-    $seller_result = mysqli_query($connection, $query);
-    $seller = mysqli_fetch_array($seller_result);
-    $query = "select * from bid where auction_id='".$auction['auction_id']."' order by price desc";
-    $bid_result = mysqli_query($connection, $query);
-    echo "
-      <li class='list-group-item result-item'>
-        <a class='item-name' href='/auction/public_html/auction.php?auction=".$auction['auction_id']."'>".$item['name']."</a> 
-        <span class='seller-info'>(sold by <a class='seller-name' href='/auction/public_html/user.php?user=".$seller['user_id']."'>".$seller['name']."</a>)</span> <!--TODO-->
-        <span class='auction-info'>".$item['description']."</span>
-        <span class='auction-info'>End Date: ".$auction['end_date']."</span>
-        <span class='auction-info'>Current Price: &#163; ".$current_price."</span>
-      </li>
-    "; 
-  }
-  echo "</ul>";
 ?>
 <a id="back-to-search" href="/auction/public_html/search.php">Choose Other Category</a>
 <?php
