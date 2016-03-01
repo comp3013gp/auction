@@ -15,27 +15,6 @@ CREATE TABLE user (
   INDEX(name, email_address)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE rating (
-  rating_id int(10) unsigned NOT NULL AUTO_INCREMENT,
-  user_id int(10) unsigned NOT NULL,
-  rating enum('0','1','2','3','4','5') NOT NULL DEFAULT '0',
-  comment varchar(255) DEFAULT NULL,
-  is_pending enum('0', '1') NOT NULL DEFAULT '1',
-  rated_by int(10) unsigned NOT NULL,
-  auction_id int(10) unsigned NOT NULL,
-  created_at timestamp NOT NULL DEFAULT 0,
-  updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-
-  PRIMARY KEY(rating_id),
-  FOREIGN KEY(user_id)
-    REFERENCES user(user_id),
-  FOREIGN KEY(rated_by)
-    REFERENCES user(user_id),
-  FOREIGN KEY(auction_id)
-    REFERENCES auction(auction_id),
-  INDEX(rating)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 CREATE TABLE category (
   category_id int(10) unsigned NOT NULL AUTO_INCREMENT,
   name varchar(50) NOT NULL,
@@ -81,6 +60,27 @@ CREATE TABLE auction (
     REFERENCES item(item_id),
   INDEX(end_date),
   INDEX(view_count)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE rating (
+  rating_id int(10) unsigned NOT NULL AUTO_INCREMENT,
+  user_id int(10) unsigned NOT NULL,
+  rating enum('0','1','2','3','4','5') NOT NULL DEFAULT '0',
+  comment varchar(255) DEFAULT NULL,
+  is_pending enum('0', '1') NOT NULL DEFAULT '1',
+  rated_by int(10) unsigned NOT NULL,
+  auction_id int(10) unsigned NOT NULL,
+  created_at timestamp NOT NULL DEFAULT 0,
+  updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+  PRIMARY KEY(rating_id),
+  FOREIGN KEY(user_id)
+    REFERENCES user(user_id),
+  FOREIGN KEY(rated_by)
+    REFERENCES user(user_id),
+  FOREIGN KEY(auction_id)
+    REFERENCES auction(auction_id),
+  INDEX(rating)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE bid (
