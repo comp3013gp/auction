@@ -5,6 +5,12 @@
     header("Location: /auction/public_html/login.php");
   }
   
+  $query = "select * from rating where rated_by='".$_SESSION['user_id']."' and is_pending='1'";
+  $result = mysqli_query($connection, $query);
+  if ($rating = mysqli_fetch_array($result)) {
+    header("Location: /auction/public_html/rating.php?id=".$rating['rating_id']);
+  }
+
   require_once(realpath(dirname(__FILE__) . "/../resources/dbconnection.php"));
   require_once(realpath(dirname(__FILE__) . "/../resources/config.php"));
 
