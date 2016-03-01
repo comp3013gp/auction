@@ -3,3 +3,20 @@ a.main-page {
   font-size: 20px;
   margin-top: 30px;
 }
+
+a.item-name {
+  display: inline;
+  font-size: 20px;
+}
+
+span.auction-info {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 1px;
+  margin-bottom: 4px;
+}
+
+ul#result-list {
+  margin-top: 30px;
+}
