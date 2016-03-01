@@ -30,6 +30,9 @@
   $result = mysqli_query($connection, $query);
   $item = mysqli_fetch_array($result);
 
+  $date = time();
+  $date = date('Y-m-d H:i:s', strtotime(str_replace('-', '/', $date)));
+
   require_once(TEMPLATES_PATH . '/top_bar.php');
 ?>
 <h1 id="auction-h1">
