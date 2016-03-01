@@ -6,7 +6,15 @@
 
   if (!isset($_SESSION['user_id'])) {
     header("Location: /auction/public_html/login.php");
-  } elseif ($_SESSION['user_type'] == "seller") {
+  }
+  
+  $query = "select * from rating where rated_by='".$_SESSION['user_id']."' and is_pending='1'";
+  $result = mysqli_query($connection, $query);
+  if ($rating = mysqli_fetch_array($result)) {
+    header("Location: /auction/public_html/rating.php?id=".$rating['rating_id']);
+  }
+  
+  if ($_SESSION['user_type'] == "seller") {
     header("Location: /auction/public_html/main.php");
   }
 
