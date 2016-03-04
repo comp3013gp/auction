@@ -7,5 +7,7 @@
     header("Location: login.php");
   }
 
-  mysqli_close($connection);
+  if (isset($connection)) {
+    mysqli_close($connection);
+  }
 ?>
