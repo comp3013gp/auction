@@ -1,21 +1,21 @@
 <?php
   session_start();
 
-  require_once(realpath(dirname(__FILE__) . "/../resources/dbconnection.php"));
-  require_once(realpath(dirname(__FILE__) . "/../resources/config.php"));
+  require_once("../resources/dbconnection.php");
+  require_once("../resources/config.php");
 
   if (!isset($_SESSION['user_id'])) {
-    header("Location: /auction/public_html/login.php");
+    header("Location: login.php");
   }
 
   $query = "select * from rating where rated_by='".$_SESSION['user_id']."' and is_pending='1'";
   $result = mysqli_query($connection, $query);
   if ($rating = mysqli_fetch_array($result)) {
-    header("Location: /auction/public_html/rating.php?id=".$rating['rating_id']);
+    header("Location: rating.php?id=".$rating['rating_id']);
   }
 
   if (!isset($_GET['user']) || $_GET['user'] == '') {
-    header("Location: /auction/public_html/search.php");
+    header("Location: search.php");
   }
 
   if ($_SESSION['user_id'] == $_GET['user']) {
@@ -69,8 +69,8 @@
       echo "
         <li class='list-group-item rating-item'>
           <span class='rating-info-inline' id='rating-val'>".$rating['rating']."/5</span>
-          <span class='rating-info-inline' id='rated_by'>(rated by <a href='/auction/public_html/user.php?user=".$rated_by['user_id']."'>".$rated_by['name']."</a>)</span>
-          <span class='rating-info'>Auction: <a href='/auction/public_html/auction.php?auction=".$auction['auction_id']."'>".$item['name']."</a></span>
+          <span class='rating-info-inline' id='rated_by'>(rated by <a href='user.php?user=".$rated_by['user_id']."'>".$rated_by['name']."</a>)</span>
+          <span class='rating-info'>Auction: <a href='auction.php?auction=".$auction['auction_id']."'>".$item['name']."</a></span>
           <span class='rating-info'>Comment: ".$rating['comment']."</span>
         </li>
       "; 

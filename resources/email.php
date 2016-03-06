@@ -1,6 +1,6 @@
 <?php
 
-require_once(realpath(dirname(__FILE__) . "/library/phpmailer/phpmailerautoload.php"));
+require_once("library/phpmailer/phpmailerautoload.php");
 
 class email_sender
 {

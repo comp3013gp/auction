@@ -1,25 +1,25 @@
 <?php
   session_start();
 
-  require_once(realpath(dirname(__FILE__) . "/../resources/dbconnection.php"));
-  require_once(realpath(dirname(__FILE__) . "/../resources/config.php"));
+  require_once("../resources/dbconnection.php");
+  require_once("../resources/config.php");
 
   if (!isset($_SESSION['user_id'])) {
-    header("Location: /auction/public_html/login.php");
+    header("Location: login.php");
   }
   
   $query = "select * from rating where rated_by='".$_SESSION['user_id']."' and is_pending='1'";
   $result = mysqli_query($connection, $query);
   if ($rating = mysqli_fetch_array($result)) {
-    header("Location: /auction/public_html/rating.php?id=".$rating['rating_id']);
+    header("Location: rating.php?id=".$rating['rating_id']);
   }
   
   if ($_SESSION['user_type'] == "seller") {
-    header("Location: /auction/public_html/main.php");
+    header("Location: main.php");
   }
 
   if (!isset($_GET['category'])) {
-    header("Location: /auction/public_html/search.php");
+    header("Location: search.php");
   }
 
   if (!isset($_GET['sort'])) {
@@ -65,22 +65,23 @@
     echo "
       <span id='sort-by'>Sort by:</span>
       <select id='sort-selector' onchange='window.location = this.options[this.selectedIndex].value'>
+
         <option id='newly-added'
-                value='/auction/public_html/search_result.php?category=".$_GET['category']."'>
+                value='search_result.php?category=".$_GET['category']."'>
           Newly Added
         </option>
         <option id='price-asc'
-                value='/auction/public_html/search_result.php?category=".$_GET['category']."&sort=price-asc'
+                value='search_result.php?category=".$_GET['category']."&sort=price-asc'
                 ";if ($sort_by == 'price-asc') {echo 'selected';} echo ">
           Price: Low to High
         </option>
         <option id='price-desc'
-                value='/auction/public_html/search_result.php?category=".$_GET['category']."&sort=price-desc'
+                value='search_result.php?category=".$_GET['category']."&sort=price-desc'
                 ";if ($sort_by == 'price-desc') {echo 'selected';} echo ">
           Price: High to Low
         </option>
         <option id='ending-soon'
-                value='/auction/public_html/search_result.php?category=".$_GET['category']."&sort=ending-soon'
+                value='search_result.php?category=".$_GET['category']."&sort=ending-soon'
                 ";if ($sort_by == 'ending-soon') {echo 'selected';} echo ">
           Ending Soon
         </option>
@@ -99,8 +100,8 @@
       $bid_result = mysqli_query($connection, $query);
       echo "
         <li class='list-group-item result-item'>
-          <a class='item-name' href='/auction/public_html/auction.php?auction=".$auction['auction_id']."'>".$item['name']."</a> 
-          <span class='seller-info'>(sold by <a class='seller-name' href='/auction/public_html/user.php?user=".$seller['user_id']."'>".$seller['name']."</a>)</span> <!--TODO-->
+          <a class='item-name' href='auction.php?auction=".$auction['auction_id']."'>".$item['name']."</a> 
+          <span class='seller-info'>(sold by <a class='seller-name' href='user.php?user=".$seller['user_id']."'>".$seller['name']."</a>)</span> <!--TODO-->
           <span class='auction-info'>".$item['description']."</span>
           <span class='auction-info'>End Date: ".$auction['end_date']."</span>
           <span class='auction-info'>Current Price: &#163; ".$current_price."</span>
@@ -112,7 +113,7 @@
     echo "<span id='not-found-message'>Sorry, no auction found.</span>";
   }
 ?>
-<a id="back-to-search" href="/auction/public_html/search.php">Choose Other Category</a>
+<a id="back-to-search" href="search.php">Choose Other Category</a>
 <?php
   require_once(TEMPLATES_PATH . '/bottom_bar.php');
 ?>

@@ -1,17 +1,17 @@
 <?php
   session_start();
 
-  require_once(realpath(dirname(__FILE__) . "/../resources/dbconnection.php"));
-  require_once(realpath(dirname(__FILE__) . "/../resources/config.php"));
+  require_once("../resources/dbconnection.php");
+  require_once("../resources/config.php");
 
   if (!isset($_SESSION['user_id'])) {
-    header("Location: /auction/public_html/login.php");
+    header("Location: login.php");
   }
 
   $query = "select * from rating where rated_by='".$_SESSION['user_id']."' and is_pending='1'";
   $result = mysqli_query($connection, $query);
   if ($rating = mysqli_fetch_array($result)) {
-    header("Location: /auction/public_html/rating.php?id=".$rating['rating_id']);
+    header("Location: rating.php?id=".$rating['rating_id']);
   }
 
   require_once(TEMPLATES_PATH . '/top_bar.php');
