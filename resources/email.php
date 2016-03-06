@@ -1,6 +1,6 @@
 <?php
 
-require_once("library/phpmailer/phpmailerautoload.php");
+require_once("library/PHPMailer/PHPMailerAutoload.php");
 
 class email_sender
 {
@@ -43,3 +43,4 @@ class email_sender
 
 //$sender=new email_sender();
 //$sender->send('ganzhexiaxiaohao@163.com','test','body');
+//echo 'ok';

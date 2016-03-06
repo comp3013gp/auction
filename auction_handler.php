@@ -4,8 +4,10 @@
 
   $query = "select * from auction where end_date <= now()";
   $auctions = mysqli_query($connection, $query);
-
+  $counter = 0;
+  
   while ($auction = mysqli_fetch_array($auctions)) {
+	$counter++;
     if ($auction['has_ended'] == '0') {
       mysqli_query($connection, "update auction set has_ended='1' where auction_id=".$auction['auction_id']."");
       $query = "select b.price, u.user_id, u.name, u.email_address
@@ -49,4 +51,6 @@
       }
     }
   }
+  
+  echo(date("Y-m-d H:i:s")." auction_handler.php : $counter auctions ended.\n");
 ?>
