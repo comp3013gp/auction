@@ -32,13 +32,22 @@
 </h2>
 <?php
   if ($_SESSION['user_type'] == "seller") {
-    $query = "SELECT auction.current_price, auction.reserve_price, auction.end_date, auction.view_count,
-                  auction.auction_id, item.name, item.description, category.name as cName
-              FROM auction
-                JOIN item ON item.item_id = auction.item_id
-                JOIN category ON category.category_id = item.category_id
-              WHERE auction.has_ended = '0' AND auction.seller_id = ".$_SESSION['user_id']."
-              ORDER BY auction.end_date desc";
+    $query = "SELECT MAX(bid.price) as MaxBid, bid.bidder_id, item.name, item.description, category.name as cName,
+                    auction.auction_id, auction.reserve_price, auction.end_date, auction.view_count
+                  FROM bid
+                    JOIN auction ON auction.auction_id = bid.auction_id
+                    JOIN item ON item.item_id = auction.item_id
+                    JOIN category ON category.category_id = item.category_id
+                  WHERE auction.has_ended = '0' AND auction.seller_id = ".$_SESSION['user_id']."
+                  GROUP BY bid.auction_id
+              UNION
+              SELECT null as MaxBid, null as bidder_id, item.name, item.description, category.name as cName,
+                    auction.auction_id, auction.reserve_price, auction.end_date, auction.view_count
+                  FROM auction
+                    JOIN item ON item.item_id = auction.item_id
+                    JOIN category ON category.category_id = item.category_id
+                  WHERE auction.has_ended = '0' AND auction.seller_id = ".$_SESSION['user_id']." AND NOT EXISTS (SELECT * from bid WHERE bid.auction_id = auction.auction_id)
+                  ORDER BY end_date desc";
     $result = mysqli_query($connection, $query);
     $row = mysqli_fetch_array($result);
 
@@ -48,12 +57,15 @@
     else {
       echo "<ul class='list-group' id='result-list'>";
       do {
+        $current_price = "No bids have been placed on this auction";
+        if ($row['MaxBid'] != null) $current_price = "Latest Price: &#163;".$row['MaxBid']." (Reserve Price &#163;".$row['reserve_price'].")";
+
         echo "
         <li class='list-group-item result-item'>
           <a class='item-name' href='auction.php?auction=".$row['auction_id']."'>".$row['name']."</a>
           <span class='auction-info'>".$row['description']."</span>
           <span class='auction-info'>Category: ".$row['cName']."</span>
-          <span class='auction-info'>Current Price: &#163;".$row['current_price']." (Reserve Price &#163;".$row['reserve_price'].")</span>
+          <span class='auction-info'>".$current_price."</span>
           <span class='auction-info'>End Date: ".$row['end_date']."</span>
           <span class='auction-info'>View Count: ".$row['view_count']."</span>
         </li>
@@ -63,12 +75,14 @@
     }
   }
   else {
-    $query = "SELECT auction.auction_id, auction.current_price, auction.end_date,
-                  item.name, item.description, category.name as cName
-              FROM auction
+    $query = "SELECT MAX(bid.price) as MaxBid, item.name, item.description, category.name as cName,
+                auction.auction_id, auction.current_price, auction.end_date
+              FROM bid
+                JOIN auction ON auction.auction_id = bid.auction_id
                 JOIN item ON item.item_id = auction.item_id
                 JOIN category ON category.category_id = item.category_id
-              WHERE auction.has_ended = '0'
+              WHERE auction.has_ended = '0' AND bid.bidder_id = ".$_SESSION['user_id']."
+              GROUP BY bid.auction_id
               ORDER BY auction.end_date desc";
     $result = mysqli_query($connection, $query);
     $row = mysqli_fetch_array($result);
@@ -79,22 +93,16 @@
     else {
       echo "<ul class='list-group' id='result-list'>";
       do {
-        $bids_query = "SELECT bid.price
-                      FROM bid
-                      WHERE bid.bidder_id = ".$_SESSION['user_id']." AND bid.auction_id = ".$row['auction_id']."
-                      ORDER BY bid.updated_at desc";
-        $bids_result = mysqli_query($connection, $bids_query);
-        $most_recent_bid = mysqli_fetch_array($bids_result);
         $winning_or_losing = " (you're winning the auction!)";
-        if ($row['current_price'] > $most_recent_bid['price']) $winning_or_losing = " (you've been outbid!)";
+        if ($row['current_price'] > $row['MaxBid']) $winning_or_losing = " (you've been outbid!)";
 
         echo "
         <li class='list-group-item result-item'>
           <a class='item-name' href='auction.php?auction=".$row['auction_id']."'>".$row['name']."</a>
           <span class='auction-info'>".$row['description']."</span>
           <span class='auction-info'>Category: ".$row['cName']."</span>
-          <span class='auction-info'>Your Bid: &#163;".$most_recent_bid['price']."</span>
-          <span class='auction-info'>Current Price: &#163;".$row['current_price'].$winning_or_losing."</span>
+          <span class='auction-info'>Your Bid: &#163;".$row['MaxBid']."</span>
+          <span class='auction-info'>Latest Price: &#163;".$row['current_price'].$winning_or_losing."</span>
           <span class='auction-info'>End Date: ".$row['end_date']."</span>
         </li>
         ";
@@ -109,13 +117,23 @@
 </h2>
 <?php
   if ($_SESSION['user_type'] == "seller") {
-    $query = "SELECT auction.current_price, auction.end_date, auction.view_count,
-                  auction.auction_id, item.name, item.description, category.name as cName
-              FROM auction
-                JOIN item ON item.item_id = auction.item_id
-                JOIN category ON category.category_id = item.category_id
-              WHERE auction.has_ended = '1' AND auction.seller_id = ".$_SESSION['user_id']."
-              ORDER BY auction.end_date desc";
+    $query = "SELECT MAX(bid.price) as MaxBid, bid.bidder_id, user.name as BidderName, item.name, item.description, category.name as cName,
+                    auction.auction_id, auction.reserve_price, auction.end_date, auction.view_count
+                  FROM bid
+                    JOIN auction ON auction.auction_id = bid.auction_id
+                    JOIN item ON item.item_id = auction.item_id
+                    JOIN category ON category.category_id = item.category_id
+                    JOIN user ON bid.bidder_id = user.user_id
+                  WHERE auction.has_ended = '1' AND auction.seller_id = ".$_SESSION['user_id']."
+                  GROUP BY bid.auction_id
+              UNION
+              SELECT null as MaxBid, null as bidder_id, null as BidderName, item.name, item.description, category.name as cName,
+                    auction.auction_id, auction.reserve_price, auction.end_date, auction.view_count
+                  FROM auction
+                    JOIN item ON item.item_id = auction.item_id
+                    JOIN category ON category.category_id = item.category_id
+                  WHERE auction.has_ended = '1' AND auction.seller_id = ".$_SESSION['user_id']." AND NOT EXISTS (SELECT * from bid WHERE bid.auction_id = auction.auction_id)
+                  ORDER BY end_date desc";
     $result = mysqli_query($connection, $query);
     $row = mysqli_fetch_array($result);
 
@@ -125,12 +143,26 @@
     else {
       echo "<ul class='list-group' id='result-list'>";
       do {
+        $outcome = "Auction ended without any bids";
+        if ($row['MaxBid'] != null) $outcome = "Latest Price: &#163;".$row['MaxBid']." (Reserve Price &#163;".$row['reserve_price'].")";
         echo "
         <li class='list-group-item result-item'>
           <a class='item-name' href='auction.php?auction=".$row['auction_id']."'>".$row['name']."</a>
           <span class='auction-info'>".$row['description']."</span>
           <span class='auction-info'>Category: ".$row['cName']."</span>
-          <span class='auction-info'>Sale Price: &#163;".$row['current_price']."</span>
+          <span class='auction-info'>".$outcome."</span>
+        ";
+        if ($row['MaxBid'] != null && $row['MaxBid'] > $row['reserve_price']) {
+          echo "
+          <span class='auction-info'>Auction won by <a href='user.php?user=".$row['bidder_id']."'>".$row['BidderName']."</a></span>
+          ";
+        }
+        else {
+          echo "
+          <span class='auction-info'>Item was not sold</span>
+          ";
+        }
+        echo "
           <span class='auction-info'>End Date: ".$row['end_date']."</span>
           <span class='auction-info'>View Count: ".$row['view_count']."</span>
         </li>
@@ -140,12 +172,14 @@
     }
   }
   else {
-    $query = "SELECT auction.auction_id, auction.current_price, auction.end_date,
-                  item.name, item.description, category.name as cName
-              FROM auction
+    $query = "SELECT MAX(bid.price) as MaxBid, item.name, item.description, category.name as cName,
+                auction.auction_id, auction.current_price, auction.end_date, auction.reserve_price
+              FROM bid
+                JOIN auction ON auction.auction_id = bid.auction_id
                 JOIN item ON item.item_id = auction.item_id
                 JOIN category ON category.category_id = item.category_id
-              WHERE auction.has_ended = '1'
+              WHERE auction.has_ended = '1' AND bid.bidder_id = ".$_SESSION['user_id']."
+              GROUP BY bid.auction_id
               ORDER BY auction.end_date desc";
     $result = mysqli_query($connection, $query);
     $row = mysqli_fetch_array($result);
@@ -156,22 +190,17 @@
     else {
       echo "<ul class='list-group' id='result-list'>";
       do {
-        $bids_query = "SELECT bid.price
-                      FROM bid
-                      WHERE bid.bidder_id = ".$_SESSION['user_id']." AND bid.auction_id = ".$row['auction_id']."
-                      ORDER BY bid.updated_at desc";
-        $bids_result = mysqli_query($connection, $bids_query);
-        $most_recent_bid = mysqli_fetch_array($bids_result);
         $winning_or_losing = " (you won the auction!)";
-        if ($row['current_price'] > $most_recent_bid['price']) $winning_or_losing = " (you were outbid!)";
+        if ($row['reserve_price'] > $row['current_price']) $winning_or_losing = " (this auction ended without a winner)";
+        else if ($row['current_price'] > $row['MaxBid']) $winning_or_losing = " (you were outbid!)";
 
         echo "
         <li class='list-group-item result-item'>
           <a class='item-name' href='auction.php?auction=".$row['auction_id']."'>".$row['name']."</a>
           <span class='auction-info'>".$row['description']."</span>
           <span class='auction-info'>Category: ".$row['cName']."</span>
-          <span class='auction-info'>Your Bid: &#163;".$most_recent_bid['price']."</span>
-          <span class='auction-info'>Sale Price: &#163;".$row['current_price'].$winning_or_losing."</span>
+          <span class='auction-info'>Your Bid: &#163;".$row['MaxBid']."</span>
+          <span class='auction-info'>Latest Price: &#163;".$row['current_price'].$winning_or_losing."</span>
           <span class='auction-info'>End Date: ".$row['end_date']."</span>
         </li>
         ";
