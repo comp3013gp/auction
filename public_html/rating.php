@@ -1,11 +1,11 @@
 <?php
   session_start();
 
-  require_once(realpath(dirname(__FILE__) . "/../resources/dbconnection.php"));
-  require_once(realpath(dirname(__FILE__) . "/../resources/config.php"));
+  require_once("../resources/dbconnection.php");
+  require_once("../resources/config.php");
 
   if (!isset($_SESSION['user_id'])) {
-    header("Location: /auction/public_html/login.php");
+    header("Location: login.php");
   }
 
   $query = "select * from rating where rating_id='".$_GET['id']."'";
@@ -13,7 +13,7 @@
   $rating = mysqli_fetch_array($result);
 
   if ($_SESSION['user_id'] != $rating['rated_by']) {
-    header("Location: /auction/public_html/main.php");
+    header("Location: main.php");
   }
 
   $query = "select * from user where user_id='".$rating['user_id']."'";
@@ -55,7 +55,7 @@
       echo "<script type='text/javascript'>alert('$message');</script>";
     } else {
       mysqli_query($connection, "update rating set rating='".$rating_val."', comment='".$rating_comment."', is_pending='0' where rating_id='".$_GET['id']."'");
-      header('Location: /auction/public_html/main.php');
+      header('Location: main.php');
       echo "<script type='text/javascript'>alert('Thanks for rating!');</script>";
     }
   }

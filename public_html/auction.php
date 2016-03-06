@@ -1,21 +1,21 @@
 <?php
   session_start();
 
-  require_once(realpath(dirname(__FILE__) . "/../resources/dbconnection.php"));
-  require_once(realpath(dirname(__FILE__) . "/../resources/config.php"));
+  require_once("../resources/dbconnection.php");
+  require_once("../resources/config.php");
 
   if (!isset($_SESSION['user_id'])) {
-    header("Location: /auction/public_html/login.php");
+    header("Location: login.php");
   }
 
   $query = "select * from rating where rated_by='".$_SESSION['user_id']."' and is_pending='1'";
   $result = mysqli_query($connection, $query);
   if ($rating = mysqli_fetch_array($result)) {
-    header("Location: /auction/public_html/rating.php?id=".$rating['rating_id']);
+    header("Location: rating.php?id=".$rating['rating_id']);
   }
 
   if (!isset($_GET['auction']) || $_GET['auction'] == '') {
-    header("Location: /auction/public_html/search.php");
+    header("Location: search.php");
   }
 
   $query = "select * from auction where auction_id='".$_GET['auction']."'";
@@ -49,7 +49,7 @@
     <h3 class="panel-title">Auction Detail</h3>
   </div>
   <div class="panel-body">
-    <span class="auction-info">Seller: <?php echo "<a href='/auction/public_html/user.php?user=".$seller['user_id']."'>".$seller['name']."</a>";?></span>
+    <span class="auction-info">Seller: <?php echo "<a href='user.php?user=".$seller['user_id']."'>".$seller['name']."</a>";?></span>
     <span class="auction-info">Description: <?php echo $item['description'];?></span>
     <span class="auction-info">End Date: <?php echo $auction['end_date']; if ($auction['has_ended'] == '1') {echo ' (Already Ended)';}?></span>
     <span class="auction-info">Start Price: &#163; <?php echo $auction['start_price']?></span>
@@ -58,7 +58,7 @@
 </div>
 <?php
   if ($_SESSION['user_type'] == "buyer" && !$auction['has_ended'] == '1') {
-    echo "<a id='bid-link' href='/auction/public_html/new_bid.php?auction=".$auction['auction_id']."'>Bid on this auction</a>";
+    echo "<a id='bid-link' href='new_bid.php?auction=".$auction['auction_id']."'>Bid on this auction</a>";
   }
 ?>
 <?php
@@ -77,7 +77,7 @@
         <li class='list-group-item clearfix'>
           <span class='bid-info' id='bid-price'>&#163; ".$bid['price']."</span>
           <span class='bid-info' id='bid-time'>at ".$bid['created_at']."</span>
-          <span class='bid-info' id='bidder-info'>Bid by <a href='/auction/public_html/user.php?user=".$bidder['user_id']."'>".$bidder['name']."</a></span>
+          <span class='bid-info' id='bidder-info'>Bid by <a href='user.php?user=".$bidder['user_id']."'>".$bidder['name']."</a></span>
         </li>
       ";
     }

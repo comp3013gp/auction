@@ -2,13 +2,13 @@
   session_start();
 
   if (isset($_SESSION['user_id'])) {
-    header("Location: /auction/public_html/main.php");
+    header("Location: main.php");
   }
 
   $message = '';
 
-  require_once(realpath(dirname(__FILE__) . "/../resources/dbconnection.php"));
-  require_once(realpath(dirname(__FILE__) . "/../resources/config.php"));
+  require_once("../resources/dbconnection.php");
+  require_once("../resources/config.php");
 
   if (isset($_POST['action'])) {
     if ($_POST['action']=='login') {
@@ -24,7 +24,7 @@
           $user = mysqli_fetch_array($query);
           $_SESSION['user_id'] = $user['user_id']; 
           $_SESSION['user_type'] = $user['user_type']; 
-          header("Location: /auction/public_html/main.php");
+          header("Location: main.php");
         } else {
           $message .= 'You put invalid email, password, or user type.';
         }
@@ -76,7 +76,7 @@
         $user = mysqli_fetch_array($query);
         $_SESSION['user_id'] = $user['user_id'];
         $_SESSION['user_type'] = $user['user_type']; 
-        header("Location: /auction/public_html/main.php");
+        header("Location: main.php");
       } else {
         echo "<script type='text/javascript'>alert('$message');</script>";
       }

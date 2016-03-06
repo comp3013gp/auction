@@ -2,26 +2,26 @@
   session_start();
 
 
-  require_once(realpath(dirname(__FILE__) . "/../resources/email.php"));
-  require_once(realpath(dirname(__FILE__) . "/../resources/dbconnection.php"));
-  require_once(realpath(dirname(__FILE__) . "/../resources/config.php"));
+  require_once("../resources/email.php");
+  require_once("../resources/dbconnection.php");
+  require_once("../resources/config.php");
 
   if (!isset($_SESSION['user_id'])) {
-    header("Location: /auction/public_html/login.php");
+    header("Location: login.php");
   }
 
   $query = "select * from rating where rated_by='".$_SESSION['user_id']."' and is_pending='1'";
   $result = mysqli_query($connection, $query);
   if ($rating = mysqli_fetch_array($result)) {
-    header("Location: /auction/public_html/rating.php?id=".$rating['rating_id']);
+    header("Location: rating.php?id=".$rating['rating_id']);
   }
 
   if ($_SESSION['user_type'] == "seller") {
-    header("Location: /auction/public_html/main.php");
+    header("Location: main.php");
   }
 
   if (!isset($_GET['auction']) || $_GET['auction'] == '') {
-    header("Location: /auction/public_html/search.php");
+    header("Location: search.php");
   }
 
   function validate_price($price) {
@@ -101,8 +101,8 @@
     <h3 class="panel-title">Auction Detail</h3>
   </div>
   <div class="panel-body">
-    <span class="auction-info">Seller: <?php echo "<a href='/auction/public_html/user.php?user=".$seller['user_id']."'>".$seller['name']."</a>";?></span>
-    <span class="auction-info">Item: <?php echo "<a href='/auction/public_html/auction.php?auction=".$auction['auction_id']."'>".$item['name']."</a>";?></span>
+    <span class="auction-info">Seller: <?php echo "<a href='user.php?user=".$seller['user_id']."'>".$seller['name']."</a>";?></span>
+    <span class="auction-info">Item: <?php echo "<a href='auction.php?auction=".$auction['auction_id']."'>".$item['name']."</a>";?></span>
     <span class="auction-info">Description: <?php echo $item['description'];?></span>
     <span class="auction-info">End Date: <?php echo $auction['end_date']; if ($auction['has_ended'] == '1') {echo ' (Already Ended)';}?></span>
     <span class="auction-info">Start Price: &#163; <?php echo $auction['start_price']?></span>
