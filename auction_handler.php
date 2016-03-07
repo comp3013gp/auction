@@ -7,8 +7,8 @@
   $counter = 0;
   
   while ($auction = mysqli_fetch_array($auctions)) {
-	$counter++;
     if ($auction['has_ended'] == '0') {
+	  $counter++;
       mysqli_query($connection, "update auction set has_ended='1' where auction_id=".$auction['auction_id']."");
       $query = "select b.price, u.user_id, u.name, u.email_address
                 from bid as b
