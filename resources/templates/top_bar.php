@@ -6,7 +6,7 @@
 <html>
 <head>
   <title>COMP3013gp</title>
-  <link rel="stylesheet" type="text/css" href="../resources/library/bootstrap-3.3.6-dest/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="library/bootstrap-3.3.6-dest/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="<?php echo 'css/application.css'; ?>">
   <link rel="stylesheet" type="text/css" href="<?php echo 'css/top_bar.css'; ?>">
   <link rel="stylesheet" type="text/css" href="<?php echo ('css/' . $css_file); ?>">
@@ -22,7 +22,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/auction/public_html/main.php">comp3013gp-auction</a>
+      <a class="navbar-brand" href="main.php">comp3013gp-auction</a>
     </div>
     <?php
       if (basename($_SERVER["SCRIPT_FILENAME"]) != "login.php") {
