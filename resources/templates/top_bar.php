@@ -1,23 +1,18 @@
 <!DOCTYPE html>
 <?php
-  define('CSSPATH', '/auction/public_html/css/');
-  define('JSPATH', '/auction/public_html/js/');
   $css_file =  basename($_SERVER["SCRIPT_FILENAME"], '.php') . '.css';
   $js_file =  basename($_SERVER["SCRIPT_FILENAME"], '.php') . '.js';
 ?>
 <html>
 <head>
   <title>COMP3013gp</title>
-  <link rel="stylesheet" type="text/css" href="/auction/resources/library/bootstrap-3.3.6-dest/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="<?php echo (CSSPATH . 'application.css'); ?>">
-  <link rel="stylesheet" type="text/css" href="<?php echo (CSSPATH . 'top_bar.css'); ?>">
-  <link rel="stylesheet" type="text/css" href="<?php echo (CSSPATH . $css_file); ?>">
+  <link rel="stylesheet" type="text/css" href="../resources/library/bootstrap-3.3.6-dest/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="<?php echo 'css/application.css'; ?>">
+  <link rel="stylesheet" type="text/css" href="<?php echo 'css/top_bar.css'; ?>">
+  <link rel="stylesheet" type="text/css" href="<?php echo ('css/' . $css_file); ?>">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-<?php
-  require_once(realpath(dirname(__FILE__) . "/../config.php"));
-?>
 <nav class="navbar">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -34,9 +29,9 @@
         echo ' 
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right">
-          <li><a class="nav-item" href="/auction/public_html/item_list.php">MyItems</a></li>
-          <li><a class="nav-item" href="/auction/public_html/user.php?user='.$_SESSION['user_id'].'">MyAccount</a></li>
-          <li><a class="nav-item" href="/auction/public_html/logout.php?logout">SignOut</a></li>
+          <li><a class="nav-item" href="item_list.php">MyItems</a></li>
+          <li><a class="nav-item" href="user.php?user='.$_SESSION['user_id'].'">MyAccount</a></li>
+          <li><a class="nav-item" href="logout.php?logout">SignOut</a></li>
         </ul>
         </div>';
       }
