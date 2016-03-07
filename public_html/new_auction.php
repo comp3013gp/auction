@@ -63,9 +63,11 @@
     } else {
       $end_date_input = $_POST['end-year'] . '-' . $_POST['end-month'] . '-' . $_POST['end-day'] . ' ' . $_POST['end-time'];
       $date = time();
-      $date = date('Y-m-d H:i:s', strtotime(str_replace('-', '/', $date)));
+      $date = date('Y-m-d H:i:s', $date);
       if ($date >= $end_date_input) {
         $message .= 'Enter valid end date.\n';
+        $message .= '$end_date_input: '.$end_date_input.'\n';
+        $message .= '$date:'.$date.'\n';
       } else {
         $end_date = mysqli_real_escape_string($connection, $end_date_input);
       }
