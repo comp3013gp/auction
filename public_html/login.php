@@ -72,7 +72,7 @@
       }
       if ($message == '') {
         mysqli_query($connection, "insert into user(name,email_address,password,user_type,created_at) values('".$name."','".$email_address."','".$password."','".$user_type."',NULL)");
-        $query = mysqli_query($connection, "select * from user where email_address='$email_address'");
+        $query = mysqli_query($connection, "select * from user where email_address='".$email_address."' and user_type='".$user_type."'");
         $user = mysqli_fetch_array($query);
         $_SESSION['user_id'] = $user['user_id'];
         $_SESSION['user_type'] = $user['user_type']; 

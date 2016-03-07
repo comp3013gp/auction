@@ -2,8 +2,11 @@
   session_start();
 
   if (isset($_GET['logout'])) {
+    $_SESSION = array();
+    if (isset($_COOKIE[session_name()])) {
+      setcookie(session_name(), '', time() - 3600);
+    }
     session_destroy();
-    unset($_SESSION['user_id']);
     header("Location: login.php");
   }
 
