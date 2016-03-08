@@ -14,7 +14,7 @@ class email_sender
         $this->mail->isSMTP();
         $this->mail->Host = 'smtp-mail.outlook.com';
         $this->mail->SMTPAuth = true;
-        $this->mail->Username = 'comp3013@outlook.com';
+        $this->mail->Username = 'comp3013-11@outlook.com';
         $this->mail->Password = 'UCLdatabase';
         $this->mail->SMTPSecure = 'tls';
         $this->mail->Port = 587;
@@ -41,6 +41,6 @@ class email_sender
     }
 }
 
-//$sender=new email_sender();
-//$sender->send('ganzhexiaxiaohao@163.com','test','body');
-//echo 'ok';
+$sender=new email_sender();
+$sender->send('ganzhexiaxiaohao@163.com','test','body');
+echo 'ok';

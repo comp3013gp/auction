@@ -19,7 +19,7 @@
 	  
 	  $str_recommends = "You may interested in \n";
 	  while ($result = mysqli_fetch_array($recommends)) {
-		  $str_recommends = $str_recommends. "auction: ".$result['auction_id']." for item ".$result['item_id']." which will end at ".$result['end_date']."\n";
+		  $str_recommends = $str_recommends. "auction: ".$result['auction_id']." for item ".$result['item_id']." which will end at ".$result['end_date'].";\n";
 	  }
 	  return $str_recommends;
   }
