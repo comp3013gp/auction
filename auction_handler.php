@@ -2,12 +2,15 @@
   require_once(realpath(dirname(__FILE__) . "/resources/dbconnection.php"));
   require_once(realpath(dirname(__FILE__) . "/resources/email.php"));
 
-  $query = "select * from auction where end_date <= now()";
+  $query = "select * from auction where end_date <= now() and has_ended='0'";
   $auctions = mysqli_query($connection, $query);
   $counter = 0;
   
+  if(!empty($auctions)){
+    $sender = new email_sender();
+  }
+  
   while ($auction = mysqli_fetch_array($auctions)) {
-    if ($auction['has_ended'] == '0') {
 	  $counter++;
       mysqli_query($connection, "update auction set has_ended='1' where auction_id=".$auction['auction_id']."");
       $query = "select b.price, u.user_id, u.name, u.email_address
@@ -31,8 +34,6 @@
       $query = "select * from user where user_id=".$auction['seller_id']."";
       $seller = mysqli_query($connection, $query);
       $seller = mysqli_fetch_array($seller);
-        
-      $sender = new email_sender();
 
       if ($winner_exists) {
         if ($winner['price'] < $auction['reserve_price']) {
@@ -58,7 +59,6 @@
                       'Your Auction Ended',
                       'I am sorry, but your auction "'.$item['name'].'" ended and no one bid on your item. But do not be discouraged, your great item remains in your possession!!');
       }
-    }
   }
   
   echo(date("Y-m-d H:i:s")." auction_handler.php : $counter auctions ended.\n");
