@@ -4,14 +4,13 @@
 
   $query = "select * from auction where end_date <= now() and has_ended='0'";
   $auctions = mysqli_query($connection, $query);
-  $counter = 0;
+  $counter =$auctions->num_rows;
   
-  if(!empty($auctions)){
+  if($counter!=0){
     $sender = new email_sender();
   }
   
   while ($auction = mysqli_fetch_array($auctions)) {
-	  $counter++;
       mysqli_query($connection, "update auction set has_ended='1' where auction_id=".$auction['auction_id']."");
       $query = "select b.price, u.user_id, u.name, u.email_address
                 from bid as b

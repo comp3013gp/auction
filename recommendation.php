@@ -10,10 +10,10 @@
 	  WHERE bid.bidder_id <> $user_id AND bid.auction_id IN(
       SELECT bid.auction_id FROM bid WHERE bid.bidder_id = $user_id
       GROUP BY bid.auction_id) GROUP BY bid.bidder_id ) GROUP BY
-	  bid.auction_id ) AND auction.has_ended = 0 LIMIT 10;";
+	  bid.auction_id ) AND auction.has_ended = '0' LIMIT 10;";
 	  
 	  $recommends = mysqli_query($dbconnection, $query);
-	  if(empty($recommends)){
+	  if($recommends->num_rows==0){
 		  return '';
 	  }
 	  
