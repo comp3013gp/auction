@@ -12,12 +12,12 @@ class email_sender
         $this->mail = new PHPMailer;
 
         $this->mail->isSMTP();
-        $this->mail->Host = 'smtp-mail.outlook.com';
-        $this->mail->SMTPAuth = true;
-        $this->mail->Username = 'comp3013@outlook.com';
+        $this->mail->Host = 'smtp.gmail.com';
+        $this->mail->SMTPAuth = true
+        $this->mail->Username = 'comp3013.auction@gmail.com';
         $this->mail->Password = 'UCLdatabase';
-        $this->mail->SMTPSecure = 'tls';
-        $this->mail->Port = 587;
+        //$this->mail->SMTPSecure = 'tls';
+        //$this->mail->Port = 587;
 
         $this->mail->setFrom('from@example.com', 'Mailer');
     }
