@@ -19,11 +19,6 @@
       $query = "select * from bid where auction_id='".$auction['auction_id']."'";
       $bids = mysqli_query($connection, $query);
       $bid_count = mysqli_num_rows($bids);
-      if ($auction['reserve_price'] > $auction['current_price']) {
-        $is_rp_met = 'Not Met';
-      } else {
-        $is_rp_met = 'Met';
-      }
       $message .= 'Auction (<a href="http://ec2-52-58-25-40.eu-central-1.compute.amazonaws.com/auction.php?auction='.$auction['auction_id'].'">'.$auction['name'].'</a>)<br>
                    End Date: '.$auction['end_date'].'<br>
                    Current Price: '.$auction['current_price'].'<br>
