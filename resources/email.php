@@ -41,6 +41,6 @@ class email_sender
     }
 }
 
-$sender=new email_sender();
-$sender->send('ganzhexiaxiaohao@163.com','test','body');
-echo 'ok';
+//$sender=new email_sender();
+//$sender->send('ganzhexiaxiaohao@163.com','test','body');
+//echo 'ok';
