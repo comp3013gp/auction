@@ -13,7 +13,7 @@ class email_sender
 
         $this->mail->isSMTP();
         $this->mail->Host = 'smtp.gmail.com';
-        $this->mail->SMTPAuth = true
+        $this->mail->SMTPAuth = true;
         $this->mail->Username = 'comp3013.auction@gmail.com';
         $this->mail->Password = 'UCLdatabase';
         //$this->mail->SMTPSecure = 'tls';
