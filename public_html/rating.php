@@ -94,10 +94,10 @@
         <input type="radio" name="inlineRadioOptions" value="3"> 3
       </label>
       <label class="radio-inline">
-        <input type="radio" name="inlineRadioOptions" value="3"> 4
+        <input type="radio" name="inlineRadioOptions" value="4"> 4
       </label>
       <label class="radio-inline">
-        <input type="radio" name="inlineRadioOptions" value="3"> 5
+        <input type="radio" name="inlineRadioOptions" value="5"> 5
       </label>
     </div>
     <div class="input_group">
