@@ -35,5 +35,5 @@
     }
      
   }
-  echo(date("Y-m-d H:i:s")." recommendation.php : $counter emails sent.\n");
+  echo(date("Y-m-d H:i:s")." sellers_report.php : $counter emails sent.\n");
 ?>
