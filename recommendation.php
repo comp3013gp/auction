@@ -18,7 +18,7 @@ function recommend($dbconnection, $user_id)
         return '';
     }
 
-    $str_recommends = "You may interested in <br>";
+    $str_recommends = "You may be interested in <br><br>";
     while ($result = mysqli_fetch_array($recommends)) {
         $get_item_name_query = "SELECT name FROM item WHERE item_id = " . $result['item_id'];
         $get_item_name=mysqli_query($dbconnection,$get_item_name_query);
@@ -26,8 +26,6 @@ function recommend($dbconnection, $user_id)
         $str_recommends .= 'Auction (<a href="http://ec2-52-58-25-40.eu-central-1.compute.amazonaws.com/auction.php?auction=' . $result['auction_id'] . '">' .$item_name . '</a>)<br>
                    End Date: ' . $result['end_date'] . '<br>
                    Current Price: ' . $result['current_price'] . '<br>
-                   Reserve Price: ' . $result['reserve_price'] . '<br>
-                   View Count: ' . $result['view_count'] . ' view(s)<br>
                    <br>';
     }
     return $str_recommends;
