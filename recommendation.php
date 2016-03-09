@@ -18,7 +18,7 @@ function recommend($dbconnection, $user_id)
         return '';
     }
 
-    $str_recommends = "You may be interested in <br><br>";
+    $str_recommends = "You may be interested in:<br><br>";
     while ($result = mysqli_fetch_array($recommends)) {
         $get_item_name_query = "SELECT name FROM item WHERE item_id = " . $result['item_id'];
         $get_item_name=mysqli_query($dbconnection,$get_item_name_query);
