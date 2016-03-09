@@ -2,9 +2,9 @@
   require_once(realpath(dirname(__FILE__) . "/resources/dbconnection.php"));
   require_once(realpath(dirname(__FILE__) . "/resources/email.php"));
 
-  $counter = 0;
+  echo(date("Y-m-d H:i:s")." sellers_report.php : \n");
 
-  $query = "select * from user where user_type='seller'";
+  $query = "select user_id,email_address from user where user_type='seller'";
   $sellers = mysqli_query($connection, $query);
 
   while ($seller = mysqli_fetch_array($sellers)) {
@@ -30,10 +30,9 @@
     
     if ($message!='') {
       $sender = new email_sender();
-      $counter++;
-      $sender->send($seller['email_address'], 'Your Current Auction Report!!', $message);
+      $sender->send_with_log($seller['email_address'], 'Your Current Auction Report!!', $message);
     }
      
   }
-  echo(date("Y-m-d H:i:s")." sellers_report.php : $counter emails sent.\n");
+  
 ?>
