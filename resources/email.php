@@ -4,6 +4,7 @@ class email_sender
 {
 
 	private $headers;
+    private $send_from="no-reply@ec2-52-58-25-40.eu-central-1.compute.amazonaws.com";
 	
     function __construct()
     {
@@ -13,7 +14,7 @@ class email_sender
 
     function send($recipient, $subject, $html_body)
     {
-		return mail($recipient, $subject, $html_body,$this->headers);
+		return mail($recipient, $subject, $html_body,$this->headers,"-f ".$this->send_from);
     }
 
     function send_with_log($recipient, $subject, $html_body){
