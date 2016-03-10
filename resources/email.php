@@ -32,3 +32,5 @@ class email_sender
         return $this->error_info;
     }
 }
+
+?>

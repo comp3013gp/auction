@@ -45,5 +45,7 @@ while ($user = mysqli_fetch_array($users)) {
     }
 }
 
+echo "$counter emails sent";
+
 
 ?>
