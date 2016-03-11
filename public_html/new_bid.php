@@ -91,6 +91,10 @@
       echo "<script type='text/javascript'>alert('Your bid placed successfully.');</script>";
     }
   }
+
+  $date = time();
+  $date = date('Y-m-d H:i:s', strtotime(str_replace('-', '/', $date)));
+
   require_once(TEMPLATES_PATH . '/top_bar.php');
 ?>
 <h1>
@@ -104,7 +108,7 @@
     <span class="auction-info">Seller: <?php echo "<a href='user.php?user=".$seller['user_id']."'>".$seller['name']."</a>";?></span>
     <span class="auction-info">Item: <?php echo "<a href='auction.php?auction=".$auction['auction_id']."'>".$item['name']."</a>";?></span>
     <span class="auction-info">Description: <?php echo $item['description'];?></span>
-    <span class="auction-info">End Date: <?php echo $auction['end_date']; if ($auction['has_ended'] == '1') {echo ' (Already Ended)';}?></span>
+    <span class="auction-info">End Date: <?php echo $auction['end_date']; if ($date >= $auction['end_date']) {echo ' (Already Ended)';}?></span>
     <span class="auction-info">Start Price: &#163; <?php echo $auction['start_price']?></span>
     <span class="auction-info">Current Price: &#163; <?php echo $current_price;?></span>
   </div>
@@ -112,17 +116,17 @@
 <div class="center-block col-xs-6" id="bid-form">
   <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]).'?auction='.$auction['auction_id'];?>" class="clearfix" id="add-bid">
     <?php
-      if ($auction['has_ended'] == '1') {
+      if ($date >= $auction['end_date']) {
         echo "<span>You cannot bid on this auction as it has already ended..</span>";
       } else {
         echo "<span>You need to bid more than the current price.</span>";
       }
     ?>
     <div class="input_group">
-    <input name="bid-price" type="text" class="form-control" placeholder="How much do you want to bid? (e.g. 50.00)" <?php if ($auction['has_ended']=='1') {echo 'disabled';}?>>
+    <input name="bid-price" type="text" class="form-control" placeholder="How much do you want to bid? (e.g. 50.00)" <?php if ($date >= $auction['end_date']) {echo 'disabled';}?>>
     </div>
     <input name="action" type="hidden" value="new-bid">
-    <input type="submit" value="submit" name="submit" class="btn btn-default pull-right" <?php if ($auction['has_ended']=='1') {echo 'disabled';}?>>
+    <input type="submit" value="submit" name="submit" class="btn btn-default pull-right" <?php if ($date >= $auction['end_date']) {echo 'disabled';}?>>
   </form> 
 </div>
 

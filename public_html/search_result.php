@@ -58,7 +58,7 @@
             from item as i
             left join auction as a
             on i.item_id=a.item_id
-            where i.category_id='".$_GET['category']."' and a.has_ended='0'
+            where i.category_id='".$_GET['category']."' and a.end_date < now()
             order by ".$sort."";
   $item_result = mysqli_query($connection, $query);
   if (mysqli_num_rows($item_result) > 0) {
