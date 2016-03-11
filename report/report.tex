@@ -26,6 +26,8 @@
 
 \section{Database Schema}
 
+This schema implements the ER diagram shown above. \texttt{user} and \texttt{category} are strong entities, while \texttt{item}, \texttt{auction}, \texttt{bid}, and \texttt{rating} are weak entities, with appropriate foreign key attributes. \texttt{user} to \texttt{item}, \texttt{user} to \texttt{auction}, \texttt{user} to \texttt{bid}, \texttt{user} to \texttt{rating}, and \texttt{auction} to \texttt{bid} are all one to many relationships.\\
+\\
 user (\underline{user\_id}, user\_type, name, email\_address, password, created\_at, updated\_at)\\
 \\
 item (\underline{item\_id}, owner\_id \textbf{references} user(user\_id), category\_id \textbf{references} category(category\_id), name, description, created\_at, updated\_at)\\
@@ -39,6 +41,12 @@ category (\underline{category\_id}, name)\\
 rating (\underline{rating\_id}, user\_id \textbf{references} user(user\_id), rating, comment, is\_pending, rated\_by \textbf{references} user(user\_id), auction\_id \textbf{references} auction(auction\_id), created\_at, updated\_at)
 
 \section{Normalisation Analysis}
+
+The schema has been implemented in SQL, thus is necessary does not contain repeating groups. The database is in First Normal Form.\\
+\\
+There are no tables containing composite keys, so it must be the case that each non-primary key attribute is fully functionally dependent on its primary key. The database, then, is in Second Normal Form.\\
+\\
+Examining the non-primary key attributes of each table, it is clear that no transitive dependencies exist. The database is in Third Normal Form.
 
 \section{Database Queries}
 
@@ -122,7 +130,8 @@ When a new bid is placed, this query retrieves the previously highest bid, if it
 
 \subsection{Seller Reports}
 \begin{minted}[]{sql}
-select a.end_date, a.current_price, a.reserve_price, a.auction_id, a.view_count, i.name
+select a.end_date, a.current_price, a.reserve_price,
+a.auction_id, a.view_count, i.name
 from auction as a
 left join item as i
 on a.item_id = i.item_id
@@ -152,12 +161,12 @@ This query computes the average rating for a given user, which is displayed on t
 \subsection{Recommendations}
 \begin{minted}[]{sql}
 SELECT * FROM auction WHERE
-	  auction.auction_id IN( SELECT bid.auction_id FROM bid
-	  WHERE bid.bidder_id IN( SELECT bid.bidder_id FROM bid
-	  WHERE bid.bidder_id <> $user_id AND bid.auction_id IN(
+    auction.auction_id IN( SELECT bid.auction_id FROM bid
+    WHERE bid.bidder_id IN( SELECT bid.bidder_id FROM bid
+    WHERE bid.bidder_id <> $user_id AND bid.auction_id IN(
       SELECT bid.auction_id FROM bid WHERE bid.bidder_id = $user_id
       GROUP BY bid.auction_id) GROUP BY bid.bidder_id ) GROUP BY
-	  bid.auction_id ) AND auction.has_ended = '0' LIMIT 10;
+    bid.auction_id ) AND auction.has_ended = '0' LIMIT 10;
 \end{minted}
 This query retrieves relevant auctions from which to recommend items, based on the previous bids of a user.
 
