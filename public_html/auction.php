@@ -51,13 +51,13 @@
   <div class="panel-body">
     <span class="auction-info">Seller: <?php echo "<a href='user.php?user=".$seller['user_id']."'>".$seller['name']."</a>";?></span>
     <span class="auction-info">Description: <?php echo $item['description'];?></span>
-    <span class="auction-info">End Date: <?php echo $auction['end_date']; if ($auction['has_ended'] == '1') {echo ' (Already Ended)';}?></span>
+    <span class="auction-info">End Date: <?php echo $auction['end_date']; if ($date >= $auction['end_date']) {echo ' (Already Ended)';}?></span>
     <span class="auction-info">Start Price: &#163; <?php echo $auction['start_price']?></span>
     <span class="auction-info">Current Price: &#163; <?php echo $current_price?></span>
   </div>
 </div>
 <?php
-  if ($_SESSION['user_type'] == "buyer" && !$auction['has_ended'] == '1') {
+  if ($_SESSION['user_type'] == "buyer" && $date < $auction['end_date']) {
     echo "<a id='bid-link' href='new_bid.php?auction=".$auction['auction_id']."'>Bid on this auction</a>";
   }
 ?>
