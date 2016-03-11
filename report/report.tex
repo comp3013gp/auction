@@ -160,14 +160,34 @@ This query computes the average rating for a given user, which is displayed on t
 
 \subsection{Recommendations}
 \begin{minted}[]{sql}
-SELECT * FROM auction WHERE
-    auction.auction_id IN( SELECT bid.auction_id FROM bid
-    WHERE bid.bidder_id IN( SELECT bid.bidder_id FROM bid
-    WHERE bid.bidder_id <> $user_id AND bid.auction_id IN(
-      SELECT bid.auction_id FROM bid WHERE bid.bidder_id = $user_id
-      GROUP BY bid.auction_id) GROUP BY bid.bidder_id ) GROUP BY
-    bid.auction_id ) AND auction.has_ended = '0' LIMIT 10;
+SELECT * 
+FROM auction
+WHERE auction.auction_id
+IN (
+
+SELECT bid.auction_id
+FROM bid
+WHERE bid.bidder_id
+IN (
+
+SELECT bid.bidder_id
+FROM bid
+WHERE bid.bidder_id <> $user_id 
+AND bid.auction_id
+IN (
+
+SELECT bid.auction_id
+FROM bid
+WHERE bid.bidder_id = $user_id
+GROUP BY bid.auction_id
+)
+GROUP BY bid.bidder_id
+)
+GROUP BY bid.auction_id
+)
+AND auction.has_ended =  '0'
+LIMIT 10
 \end{minted}
-This query retrieves relevant auctions from which to recommend items, based on the previous bids of a user.
+This query provides recommendations for user by retrieving the sorts of auctions other people, who have also bid on the sorts of auctions the user have previously bid on, are currently bidding on.
 
 \end{document}
