@@ -37,7 +37,7 @@
   $item = mysqli_fetch_array($result);
 
   $date = time();
-  $date = date('Y-m-d H:i:s', strtotime(str_replace('-', '/', $date)));
+  $date = date('Y-m-d H:i:s', $date);
 
   require_once(TEMPLATES_PATH . '/top_bar.php');
 ?>
