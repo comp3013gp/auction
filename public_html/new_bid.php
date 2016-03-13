@@ -79,15 +79,15 @@
       $sender = new email_sender();
       $sender->send($highest_bid['email_address'],
                     'You Are Outbid!!',
-                    'Your bid on "'.$item['name'].'" (&#163; '.$highest_bid['price'].') has been outbid!
-                    '.$bidder['name'].' placed a bid of &#163; '.$bid_price.'.
-                    '.'Don\'t let it get away!
+                    'Your bid on <a href="http://ec2-52-58-25-40.eu-central-1.compute.amazonaws.com/auction.php?auction='.$auction['auction_id'].'">'.$item['name'].'</a> (&#163; '.$highest_bid['price'].') has been outbid!<br>
+                    <a href="http://ec2-52-58-25-40.eu-central-1.compute.amazonaws.com/user.php?user='.$bidder['user_id'].'">'.$bidder['name'].'</a> placed a bid of &#163; '.$bid_price.'.<br>
+                    Don\'t let it get away!<br>
                     Go to the website and bid again!');
       $sender->send($seller['email_address'],
                     'You Auction Got a New Bid!!',
-                    'Your auction ("'.$item['name'].'") got a new bid.
-                    '.$bidder['name'].' placed a bid of '.'&#163; '.$bid_price.
-                    '. This auction has got '.$auction['view_count'].' view(s) so far.');
+                    'Your auction (<a href="http://ec2-52-58-25-40.eu-central-1.compute.amazonaws.com/auction.php?auction='.$auction['auction_id'].'">'.$item['name'].'</a>) got a new bid.<br>
+                    <a href="http://ec2-52-58-25-40.eu-central-1.compute.amazonaws.com/user.php?user='.$bidder['user_id'].'">'.$bidder['name'].'</a> placed a bid of '.'&#163; '.$bid_price.'.<br>
+                    This auction has got '.$auction['view_count'].' view(s) so far.');
       echo "<script type='text/javascript'>alert('Your bid placed successfully.');</script>";
     }
   }
