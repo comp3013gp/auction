@@ -28,7 +28,7 @@
   $result = mysqli_query($connection, $query);
   $user = mysqli_fetch_array($result);
 
-  $query = "select * from rating where user_id='".$_GET['user']."' and is_pending='0'";
+  $query = "select * from rating where user_id='".$_GET['user']."' and is_pending='0' order by updated_at desc";
   $ratings = mysqli_query($connection, $query);
   
   $query = "select round(avg(case rating
@@ -69,7 +69,7 @@
       echo "
         <li class='list-group-item rating-item'>
           <span class='rating-info-inline' id='rating-val'>".$rating['rating']."/5</span>
-          <span class='rating-info-inline' id='rated_by'>(rated by <a href='user.php?user=".$rated_by['user_id']."'>".$rated_by['name']."</a>)</span>
+          <span class='rating-info-inline' id='rated_by'>(rated by <a href='user.php?user=".$rated_by['user_id']."'>".$rated_by['name']."</a> at ".$rating['updated_at'].")</span>
           <span class='rating-info'>Auction: <a href='auction.php?auction=".$auction['auction_id']."'>".$item['name']."</a></span>
           <span class='rating-info'>Comment: ".$rating['comment']."</span>
         </li>
