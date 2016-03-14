@@ -152,7 +152,7 @@
           <span class='auction-info'>Category: ".$row['cName']."</span>
           <span class='auction-info'>".$outcome."</span>
         ";
-        if ($row['MaxBid'] != null && $row['MaxBid'] > $row['reserve_price']) {
+        if ($row['MaxBid'] != null && $row['MaxBid'] >= $row['reserve_price']) {
           echo "
           <span class='auction-info'>Auction won by <a href='user.php?user=".$row['bidder_id']."'>".$row['BidderName']."</a></span>
           ";
